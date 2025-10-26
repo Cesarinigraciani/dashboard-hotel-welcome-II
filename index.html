@@ -38,17 +38,20 @@
   </style>
 </head>
 <body>
-  <!-- 🏁 Cabecera del proyecto -->
+  <!--  Cabecera del proyecto -->
 <div id="avance-proyecto" class="cabecera-proyecto">
   <h1>
     Avance Proyecto PCI – Hotel Welcome II (Vallecas)
     <span style="background:#2ecc71; color:white; font-size:0.6em; padding:2px 6px; border-radius:4px; margin-left:8px;">
-      Versión 2.0
+      Versión 2.1.0
     </span>
   </h1>
   <p>Central Cofem Lyon Remote</p>
   <p><strong>Bucles:</strong> 6 &nbsp;&nbsp; <strong>Equipos:</strong> 227</p>
   <p style="font-size:0.8em; color:#666;">Actualizado por César Augusto</p>
+</div>
+<p> Avance físico global: <span id="avance-fisico-global">--%</span></p>
+  <p> Avance lógico global: <span id="avance-logico-global">--%</span></p>
 </div>
 
 <h2 id="avance-global">Avance global: 0%</h2>
@@ -58,35 +61,25 @@
   <div id="inicio-dashboard" class="selector-principal">
     <h2>¿Qué parte quieres visualizar?</h2>
     <div class="botonera">
-      <button id="btn-fisica" class="boton-seccion"><span>🔧</span> Parte física</button>
-      <button id="btn-logica" class="boton-seccion"><span>🧠</span> Parte lógica</button>
+      <button id="btn-fisica" class="boton-seccion"><span></span> Parte física</button>
+      <button id="btn-logica" class="boton-seccion"><span></span> Parte lógica</button>
     </div>
   </div>
 
-  <!-- 🔧 Parte física -->
-  <div id="dashboard-fisica" style="display:none;">
-    <h3>🔧 Instalación física por planta</h3>
-    <div id="contenedor-tarjetas"></div>
-    <button id="btn-volver" class="boton-volver">⬅️ Volver al inicio</button>
-  </div>
+ <!--  Parte física -->
+<div id="dashboard-fisica" style="display:none;">
+  <h3> Instalación física por planta</h3>
+  <div id="contenedor-tarjetas"></div>
+  <button id="btn-volver-fisica" class="boton-volver">⬅️ Volver al inicio</button>
+</div>
 
-  <!-- 🧠 Parte lógica -->
-  <div id="dashboard-logica" style="display:none;">
-    <h3>🧠 Parte lógica</h3>
-    <div class="contenedor-logica">
-      <div class="fase-logica" data-estado="BUCLE"><label>Verificación de bucles</label><progress></progress><span class="porcentaje">0%</span></div>
-      <div class="fase-logica" data-estado="CAPTADO"><label>Captación de datos</label><progress></progress><span class="porcentaje">0%</span></div>
-      <div class="fase-logica" data-estado="MARCADO"><label>Marcación en planos</label><progress></progress><span class="porcentaje">0%</span></div>
-      <div class="fase-logica" data-estado="PRUEBA BRUTA"><label>Pruebas en bruto</label><progress></progress><span class="porcentaje">0%</span></div>
-      <div class="fase-logica" data-estado="VOLCADO"><label>Volcado I-Link</label><progress></progress><span class="porcentaje">0%</span></div>
-      <div class="fase-logica" data-estado="ZONIFICADO"><label>Zonas lógicas</label><progress></progress><span class="porcentaje">0%</span></div>
-      <div class="fase-logica" data-estado="HUMO"><label>Pruebas con humo</label><progress></progress><span class="porcentaje">0%</span></div>
-      <div class="fase-logica" data-estado="ACTIVO"><label>Puesta en marcha</label><progress></progress><span class="porcentaje">0%</span></div>
-    </div>
-    <button id="btn-volver" class="boton-volver">⬅️ Volver al inicio</button>
-  </div>
-<div id="avance-logico">
-  <!-- Aquí se insertarán las tarjetas por planta desde main.js -->
+<!--  Parte lógica -->
+<div id="dashboard-logica" style="display:none;">
+  <h3> Parte lógica</h3>
+  <div id="avance-logico"></div>
+
+  <!-- ✅ Botón único y bien ubicado -->
+  <button id="btn-volver-logica" class="boton-volver">⬅️ Volver al inicio</button>
 </div>
 
  <!-- 🧩 Script para generar tarjetas por planta -->
