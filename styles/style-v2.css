@@ -6,7 +6,7 @@ body {
   color: #333;
 }
 
-/* 🏁 Cabecera del proyecto */
+/*  Cabecera del proyecto */
 .cabecera-proyecto {
   text-align: center;
   margin-bottom: 30px;
@@ -39,7 +39,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* 🎯 Botonera visual mejorada */
+/*  Botonera visual mejorada */
 .botonera {
   display: flex;
   justify-content: center;
@@ -94,7 +94,7 @@ body {
   left: 0;
 }
 
-/* 🧱 Contenedores */
+/*  Contenedores */
 #dashboard-fisica,
 #dashboard-logica {
   max-width: 800px;
@@ -108,7 +108,7 @@ h3 {
   padding-bottom: 5px;
 }
 
-/* 📊 Fases físicas y lógicas */
+/*  Fases físicas y lógicas */
 .fase,
 .fase-logica {
   margin-bottom: 25px;
@@ -156,7 +156,7 @@ progress.completado + .porcentaje {
   color: #00c853;
 }
 
-/* 📱 Responsive */
+/*  Responsive */
 @media screen and (max-width: 600px) {
   .boton-seccion {
     width: 100%;
@@ -174,13 +174,16 @@ progress.completado + .porcentaje {
   }
 }
 .boton-volver {
-  margin-top: 20px;
+  margin: 40px auto 0;         /* Centrado horizontal con margen superior */
   padding: 10px 20px;
   font-size: 1rem;
   background-color: #eee;
   border: 1px solid #ccc;
   cursor: pointer;
+  display: block;              /* Asegura que ocupe toda la línea */
+  text-align: center;          /* Centra el texto dentro del botón */
 }
+
 .tarjeta-planta {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -216,7 +219,7 @@ progress.completado + .porcentaje {
   font-size: 14px;
   margin-left: 8px;
 }
-/* 📦 Contenedor de tarjetas por planta */
+/*  Contenedor de tarjetas por planta */
 #contenedor-tarjetas {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -224,7 +227,7 @@ progress.completado + .porcentaje {
   padding-bottom: 20px;
 }
 
-/* 🧱 Tarjeta individual por planta */
+/* tarjeta individual por planta */
 .tarjeta-planta {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -237,7 +240,7 @@ progress.completado + .porcentaje {
 .tarjeta-planta:hover {
   transform: scale(1.02);
 }
-/* 🎨 Estado global por planta */
+/*  Estado global por planta */
 .estado-rojo {
   border-left: 8px solid #e74c3c;
 }
@@ -255,21 +258,21 @@ progress.completado + .porcentaje {
 }
 
 
-/* 🏷️ Título de cada tarjeta */
+/*  Título de cada tarjeta */
 .tarjeta-planta h4 {
   margin-bottom: 12px;
   color: #333;
   font-size: 18px;
 }
 
-/* 🧩 Grupo de tipos funcionales dentro de cada planta */
+/*  Grupo de tipos funcionales dentro de cada planta */
 .grupo-tipos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
 }
 
-/* 📊 Barra de progreso por tipo */
+/*  Barra de progreso por tipo */
 .barra-resumen label {
   font-weight: bold;
   display: block;
@@ -329,4 +332,37 @@ progress.completado + .porcentaje {
   height: 20px;
   margin-top: 4px;
   transition: all 1s ease-in-out;
+}
+/*  Colores motivadores para barras de avance lógico */
+.barra-verde {
+  accent-color: #2ecc71; /* verde éxito */
+}
+
+.barra-naranja {
+  accent-color: #ff9800; /* naranja medio avance */
+}
+
+.barra-roja {
+  accent-color: #f44336; /* rojo bajo avance */
+}
+
+.barra-gris {
+  accent-color: #9e9e9e; /* gris sin avance */
+}
+/*  Distribución lógica en grid */
+#avance-logico {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding-bottom: 20px;
+}
+.avance-global {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+.avance-global span {
+  color: #0078d4;
 }
