@@ -284,7 +284,9 @@ fetch(urlLogico)
 
 // ✅ Cierre final del bloque principal
 });
-Versión 2.1.0: mejoras en tarjetas lógicas y cálculo de avance global
+// Versión 2.1.0: mejoras en tarjetas lógicas y cálculo de avance global
+
+
 
 
 
