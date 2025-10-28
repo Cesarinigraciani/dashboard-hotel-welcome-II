@@ -1,7 +1,8 @@
 {
   "name": "Dashboard Vallecas",
   "short_name": "Dashboard",
-  "start_url": "https://cesarinigraciani.github.io/dashboard-hotel-welcome-II/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#da2f2f",
