@@ -313,6 +313,17 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
   }
 });
+// Detectar si la app ya está instalada
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  const installBtn = document.getElementById('btn-instalar');
+  if (installBtn) {
+    installBtn.innerHTML = '✅ Ya instalada';
+    installBtn.disabled = true;
+    installBtn.style.backgroundColor = '#4CAF50'; // verde
+    installBtn.style.cursor = 'default';
+      installBtn.classList.add('instalada');
+  }
+}
 
 
 
