@@ -42,18 +42,23 @@ document.addEventListener("DOMContentLoaded", () => {
       ? Math.round(porcentajes.reduce((a, b) => a + b, 0) / porcentajes.length)
       : 0;
     document.getElementById("avance-fisico-global").textContent = `${promedio}%`;
+    document.getElementById("loading-fisico").style.display = "none"; // 👈 Añade esta línea
     return promedio;
+      
   }
+
 
   function calcularAvanceLogicoGlobal(avanceLogico) {
-    const porcentajes = avanceLogico.map(p => Number(p.promedio || 0));
-    const promedio = porcentajes.length > 0
-      ? Math.round(porcentajes.reduce((a, b) => a + b, 0) / porcentajes.length)
-      : 0;
-    document.getElementById("avance-logico-global").textContent = `${promedio}%`;
-    return promedio;
-  }
+  const porcentajes = avanceLogico.map(p => Number(p.promedio || 0));
+  const promedio = porcentajes.length > 0
+    ? Math.round(porcentajes.reduce((a, b) => a + b, 0) / porcentajes.length)
+    : 0;
 
+  document.getElementById("avance-logico-global").textContent = `${promedio}%`;
+  document.getElementById("loading-logico").style.display = "none";
+  return promedio;
+}
+      
   //  Avance global visual (físico + lógico)
   function mostrarAvanceGlobal() {
     const promedioFisico = calcularAvanceFisicoGlobal(window._resumen || []);
@@ -68,6 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <span style="color:#2ecc71">🟢 100% completado</span>
     `;
   }
+// ✅ Ocultar mensaje de carga
+  document.getElementById("loading-global").style.display = "none";
 
   //  Cargar datos físicos
   fetch(urlResumen)
@@ -284,7 +291,30 @@ fetch(urlLogico)
 
 // ✅ Cierre final del bloque principal
 });
-// Versión 2.1.0: mejoras en tarjetas lógicas y cálculo de avance global
+// ✅ Instalación de la PWA desde el botón del icono
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const installBtn = document.getElementById('btn-instalar');
+  if (installBtn) {
+    installBtn.style.display = 'inline-block';
+
+    installBtn.addEventListener('click', () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          console.log('✅ Dashboard Vallecas instalado');
+        }
+        deferredPrompt = null;
+      });
+    });
+  }
+});
+
+
 
 
 
