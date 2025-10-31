@@ -428,6 +428,13 @@ progress.completado + .porcentaje {
   height: 32px;
   margin-left: 4px;
 }
+#btn-instalar.instalada {
+  background-color: #4CAF50;
+  color: white;
+  cursor: default;
+  font-weight: bold;
+}
+
 
 
 
