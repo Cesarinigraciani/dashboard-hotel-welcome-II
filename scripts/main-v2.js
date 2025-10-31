@@ -21,6 +21,43 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dashboard-fisica").style.display = "none";
   });
 
+  // ✅ Detectar si la app ya está instalada
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    const installBtn = document.getElementById('btn-instalar');
+    if (installBtn) {
+      installBtn.innerHTML = '✅ Ya instalada';
+      installBtn.disabled = true;
+      installBtn.style.backgroundColor = '#4CAF50';
+      installBtn.style.cursor = 'default';
+      installBtn.classList.add('instalada');
+    }
+  }
+});
+
+// ✅ Instalación de la PWA desde el botón del icono
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const installBtn = document.getElementById('btn-instalar');
+  if (installBtn) {
+    installBtn.style.display = 'inline-block';
+
+    installBtn.addEventListener('click', () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          console.log('✅ Dashboard Vallecas instalado');
+        }
+        deferredPrompt = null;
+      });
+    });
+  }
+});
+
+  
   // 🔗 Endpoints
   const urlResumen = "https://script.google.com/macros/s/AKfycby03FtUdUoGVw7r9CdZD0Za6lKwczve2CcuGaGmzSpwjzLKfJWxHlf3KQEsajwcJ5jT/exec";
   const urlLogico = "https://script.google.com/macros/s/AKfycby03FtUdUoGVw7r9CdZD0Za6lKwczve2CcuGaGmzSpwjzLKfJWxHlf3KQEsajwcJ5jT/exec";
@@ -44,9 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("avance-fisico-global").textContent = `${promedio}%`;
     document.getElementById("loading-fisico").style.display = "none"; // 👈 Añade esta línea
     return promedio;
-      
+     
   }
-
 
   function calcularAvanceLogicoGlobal(avanceLogico) {
   const porcentajes = avanceLogico.map(p => Number(p.promedio || 0));
@@ -289,41 +325,6 @@ fetch(urlLogico)
     console.error("❌ Error al cargar avance lógico por planta:", err);
   });
 
-// ✅ Cierre final del bloque principal
-});
-// ✅ Instalación de la PWA desde el botón del icono
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  const installBtn = document.getElementById('btn-instalar');
-  if (installBtn) {
-    installBtn.style.display = 'inline-block';
-
-    installBtn.addEventListener('click', () => {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(choice => {
-        if (choice.outcome === 'accepted') {
-          console.log('✅ Dashboard Vallecas instalado');
-        }
-        deferredPrompt = null;
-      });
-    });
-  }
-});
-// Detectar si la app ya está instalada
-if (window.matchMedia('(display-mode: standalone)').matches) {
-  const installBtn = document.getElementById('btn-instalar');
-  if (installBtn) {
-    installBtn.innerHTML = '✅ Ya instalada';
-    installBtn.disabled = true;
-    installBtn.style.backgroundColor = '#4CAF50'; // verde
-    installBtn.style.cursor = 'default';
-      installBtn.classList.add('instalada');
-  }
-}
 
 
 
