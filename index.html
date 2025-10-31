@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Dashboard PCI - Versión 2</title>
+ <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="styles/style-v2.css" />
   <style>
     .tarjeta-planta {
@@ -40,6 +41,8 @@
 <body>
   <!--  Cabecera del proyecto -->
 <div id="avance-proyecto" class="cabecera-proyecto">
+  <img src="assets/img/icon-192.png" alt="Dashboard Vallecas" id="icono-dashboard" style="width:64px; height:auto;">
+
   <h1>
     Avance Proyecto PCI – Hotel Welcome II (Vallecas)
     <span style="background:#2ecc71; color:white; font-size:0.6em; padding:2px 6px; border-radius:4px; margin-left:8px;">
@@ -55,16 +58,26 @@
 </div>
 
 <h2 id="avance-global">Avance global: 0%</h2>
+<!-- Animación de carga centrada -->
+<div id="loading-container">
+  <div class="loading-box" id="loading-fisico">🔄 Cargando avance físico...</div>
+  <div class="loading-box" id="loading-logico">🔄 Cargando avance lógico...</div>
+  <div class="loading-box" id="loading-global">🔄 Calculando avance global...</div>
+</div>
 
 
   <!-- 🔘 Selector inicial -->
-  <div id="inicio-dashboard" class="selector-principal">
-    <h2>¿Qué parte quieres visualizar?</h2>
-    <div class="botonera">
-      <button id="btn-fisica" class="boton-seccion"><span></span> Parte física</button>
-      <button id="btn-logica" class="boton-seccion"><span></span> Parte lógica</button>
+<div id="inicio-dashboard" class="selector-principal">
+  <h2>¿Qué parte quieres visualizar?</h2>
+  <div class="botonera">
+    <button id="btn-fisica" class="boton-seccion"><span></span> Parte física</button>
+    <button id="btn-logica" class="boton-seccion"><span></span> Parte lógica</button>
+  <button id="btn-instalar" class="boton-seccion" title="Instalar Dashboard Vallecas">
+  <img src="assets/img/icon-192.png" alt="Instalar" style="width: 32px; height: 32px; margin-right: 8px;" />
+  Instalar
+</button>
     </div>
-  </div>
+</div>
 
  <!--  Parte física -->
 <div id="dashboard-fisica" style="display:none;">
@@ -152,6 +165,14 @@
 
 <!-- 🔗 Script principal -->
 <script src="scripts/main-v2.js"></script>
+<!-- 🛡️ Registro del Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(reg => console.log('Service Worker registrado:', reg))
+    .catch(err => console.error('Error al registrar el Service Worker:', err));
+}
 
+</script>
 </body>
 </html>
