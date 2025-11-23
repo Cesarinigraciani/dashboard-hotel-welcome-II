@@ -142,73 +142,92 @@ const normalizar = (str) =>
     .replace(/\s+/g, "")
     .trim();
 
-// ✅ Cálculos globales
+// ✅ Cálculo físico global
 function calcularAvanceFisicoGlobal() {
-  const porcentajesValidos = (window._resumen || [])
+  const resumen = window._resumen || [];
+
+  // Filtramos solo plantas con equipos válidos y porcentajes numéricos
+  const porcentajesValidos = resumen
     .filter(r => Number(r.total) > 0 && !isNaN(Number(r.porcentaje)))
     .map(r => Number(r.porcentaje));
-  const promedio = porcentajesValidos.length > 0
-    ? Math.round(porcentajesValidos.reduce((a, b) => a + b, 0) / porcentajesValidos.length)
-    : 0;
+
+  // Calculamos el promedio
+  let promedio = 0;
+  if (porcentajesValidos.length > 0) {
+    const suma = porcentajesValidos.reduce((a, b) => a + b, 0);
+    promedio = Math.round(suma / porcentajesValidos.length);
+  }
+
+  // Pintamos en el dashboard
   const el = document.getElementById("avance-fisico-global");
   if (el) el.textContent = `${promedio}%`;
+
   const ld = document.getElementById("loading-fisico");
   if (ld) ld.style.display = "none";
+
+  // Devolvemos el valor para el cálculo global
   return promedio;
 }
-// ✅ Cálculo lógico global
+
+/// ✅ Cálculo lógico global
 function calcularAvanceLogicoGlobal(avanceLogico = window._avanceLogico || []) {
-  const porcentajesValidos = (avanceLogico || [])
-    .map(p => Number(p.promedio))
-    .filter(v => !isNaN(v));
+  // Validamos que sea un array y que tenga objetos con promedio numérico
+  const porcentajesValidos = Array.isArray(avanceLogico)
+    ? avanceLogico
+        .map(p => Number(p.promedio))
+        .filter(v => !isNaN(v) && v >= 0)
+    : [];
 
-  const promedio = porcentajesValidos.length > 0
-    ? Math.round(porcentajesValidos.reduce((a, b) => a + b, 0) / porcentajesValidos.length)
-    : 0;
+  let promedio = 0;
+  if (porcentajesValidos.length > 0) {
+    const suma = porcentajesValidos.reduce((a, b) => a + b, 0);
+    promedio = Math.round(suma / porcentajesValidos.length);
+  }
 
+  // Pintamos en el DOM
   const el = document.getElementById("avance-logico-global");
   if (el) el.textContent = `${promedio}%`;
-
   const ld = document.getElementById("loading-logico");
   if (ld) ld.style.display = "none";
-
   return promedio;
 }
 
-// 🧮 Avance global visual (físico + lógico)
 function mostrarAvanceGlobal() {
-  const promedioFisico = calcularAvanceFisicoGlobal(); // ya toma window._resumen internamente
-  const promedioLogico = calcularAvanceLogicoGlobal(); // asegúrate de tener esta función definida
-  const promedioGlobal = Math.round((promedioFisico + promedioLogico) / 2);
+  const promedioFisico = calcularAvanceFisicoGlobal();
+  const promedioLogico = calcularAvanceLogicoGlobal();
+  const promedioGlobal = Math.round((Number(promedioFisico) + Number(promedioLogico)) / 2);
 
-  const avanceGlobal = document.getElementById("avance-global");
-  if (avanceGlobal) {
-    let color = "#e74c3c"; // 🔴 por defecto
-    let simbolo = "🔴 Menor al 50%";
+  const valorGlobal = document.getElementById("avance-global-valor");
+  const simboloGlobal = document.getElementById("simbolo-global");
 
-    if (promedioGlobal === 100) {
-      color = "#2ecc71";
-      simbolo = "🟢 100% completado";
-    } else if (promedioGlobal >= 50) {
-      color = "#f39c12";
-      simbolo = "🟠 Entre 50% y 99%";
-    } else if (promedioGlobal === 0) {
-      color = "#00CED1";
-      simbolo = "🔷 No aplica (sin equipos en esta planta)";
-    }
+  let color = "#e74c3c";
+  let simbolo = "🔴 Menor al 50%";
 
-    avanceGlobal.innerHTML = `
-      <strong style="color:${color}">Avance global: ${promedioGlobal}%</strong><br>
-      <span style="color:#e74c3c">🔴 Menor al 50%</span> 
-      <span style="color:#f39c12">🟠 Entre 50% y 99%</span> 
-      <span style="color:#2ecc71">🟢 100% completado</span> 
-      <span style="color:#00CED1">🔷 No aplica (sin equipos en esta planta)</span>
-    `;
+  if (promedioGlobal === 0) {
+    color = "#40E0D0";
+    simbolo = "🔷 No aplica (sin equipos en esta planta)";
+  } else if (promedioGlobal === 100) {
+    color = "#2ecc71";
+    simbolo = "🟢 100% completado";
+  } else if (promedioGlobal >= 50) {
+    color = "#f39c12";
+    simbolo = "🟠 Avance medio (50–99%)";
+  }
+
+  if (valorGlobal) {
+    valorGlobal.textContent = `${promedioGlobal}%`;
+    valorGlobal.style.color = color;
+  }
+
+  if (simboloGlobal) {
+    simboloGlobal.textContent = simbolo;
+    simboloGlobal.style.color = color;
   }
 
   const lg = document.getElementById("loading-global");
   if (lg) lg.style.display = "none";
 }
+
 
 // 🔥 Barras resumen (por tipo y planta en tarjetas existentes)
 function pintarBarrasResumen() {
@@ -335,17 +354,28 @@ function pintarAvancePorPlanta() {
 fetch(urlResumen)
   .then(res => res.json())
   .then(data => {
-    const { equipos, resumen, promedios } = data;
-    window._promedios = promedios;
+    // Validamos que existan las claves
+    const equipos = data.equipos || [];
+    const resumen = data.resumen || [];
+    const promedios = data.promedios || [];
+
+    // Asignamos a window
     window._equipos = equipos;
     window._resumen = resumen;
+   window._avanceLogico = data.promedios || data.avanceLogico || [];
 
+
+    // Logs de validación
     console.log("Equipos cargados:", window._equipos);
-    console.log("🔍 Resumen completo:");
-    window._resumen.forEach(r => {
-      console.log(`Tipo: ${normalizar(r.tipo)}, Planta: ${normalizar(r.planta)}, Porcentaje: ${r.porcentaje}, Total: ${r.total}, Instalados: ${r.instalados}`);
-    });
-// ✅ Limpieza de duplicados antes de pintar
+    console.log("Resumen completo:", window._resumen);
+    console.log("Promedios (avance lógico):", window._avanceLogico);
+
+    // Calculamos y pintamos globales
+    const fisico = calcularAvanceFisicoGlobal();   // → 68
+    const logico = calcularAvanceLogicoGlobal();   // → 57
+    mostrarAvanceGlobal();                         // → 63
+
+    // ✅ Limpieza de duplicados antes de pintar
     limpiarTarjetasDuplicadas();
     // UI dependiente de datos
     pintarBarrasResumen();
@@ -456,6 +486,7 @@ fetch(urlResumen)
     console.error("❌ Error al cargar datos físicos:", err);
   });
 
+
 // 📥 Cargar avance lógico por planta
 fetch(urlLogico)
   .then(res => res.json())
@@ -546,6 +577,7 @@ fetch(urlLogico)
   .catch(err => {
     console.error("❌ Error al cargar avance lógico por planta:", err);
   });
+
 
 
 
