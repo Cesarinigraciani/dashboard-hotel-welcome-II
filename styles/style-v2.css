@@ -466,6 +466,33 @@ progress.barra-turquesa {
 progress.barra-verde {
   accent-color: #2ecc71;
 }
+/* --- Estilos responsivos para la botonera --- */
+.botonera {
+  display: flex;
+  flex-wrap: wrap;              /* permite que los botones se acomoden en varias filas */
+  justify-content: flex-start;  /* alineados a la izquierda */
+  gap: 10px;                    /* espacio entre botones */
+}
+
+.boton-seccion {
+  flex: 1 1 200px;              /* cada botón ocupa mínimo 200px y se adapta */
+  text-align: left;             /* texto alineado a la izquierda */
+  padding: 10px 16px;
+  font-size: 1em;
+}
+
+/* 📱 Ajuste especial para pantallas pequeñas */
+@media (max-width: 600px) {
+  .botonera {
+    flex-direction: column;     /* en móviles, los botones se apilan en columna */
+    align-items: stretch;
+  }
+  .boton-seccion {
+    width: 100%;                /* cada botón ocupa todo el ancho */
+    text-align: center;         /* opcional: centrado en móvil para mejor legibilidad */
+  }
+}
+
 
 
 
