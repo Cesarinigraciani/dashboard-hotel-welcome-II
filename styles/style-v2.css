@@ -113,7 +113,6 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   background: linear-gradient(135deg, #005ea2, #0090c0);
 }
-
 .boton-seccion:hover::before {
   left: 0;
 }
@@ -433,6 +432,33 @@ progress.completado + .porcentaje {
   color: white;
   cursor: default;
   font-weight: bold;
+}
+.porcentaje.no-aplica {
+  color: #999;
+  font-style: italic;
+}
+/* 🟡 Estilo para texto "No aplica" */
+.no-aplica {
+  color: #555;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+progress.barra-turquesa::-webkit-progress-value {
+  background-color: #00CED1; /* turquesa */
+}
+progress.barra-turquesa::-moz-progress-bar {
+  background-color: #00CED1; /* turquesa en Firefox */
+}
+/* ✅ Refuerzo para navegadores que no respetan accent-color */
+progress.barra-verde::-webkit-progress-value {
+  background-color: #2ecc71;
+}
+
+progress.barra-verde::-moz-progress-bar {
+  background-color: #2ecc71;
 }
 
 
