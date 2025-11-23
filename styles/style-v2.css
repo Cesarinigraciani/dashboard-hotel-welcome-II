@@ -447,19 +447,26 @@ progress.completado + .porcentaje {
   display: inline-block;
 }
 progress.barra-turquesa::-webkit-progress-value {
-  background-color: #00CED1; /* turquesa */
+  background-color: #40E0D0; /* turquesa exacto */
 }
 progress.barra-turquesa::-moz-progress-bar {
-  background-color: #00CED1; /* turquesa en Firefox */
-}
-/* ✅ Refuerzo para navegadores que no respetan accent-color */
-progress.barra-verde::-webkit-progress-value {
-  background-color: #2ecc71;
+  background-color: #40E0D0; /* turquesa en Firefox */
 }
 
-progress.barra-verde::-moz-progress-bar {
-  background-color: #2ecc71;
+/* ✅ Refuerzo para navegadores que no respetan accent-color */
+progress.barra-verde::-webkit-progress-value {
+  background-color: #2ecc71; /* verde */
 }
+progress.barra-verde::-moz-progress-bar {
+  background-color: #2ecc71; /* verde en Firefox */
+}
+progress.barra-turquesa {
+  accent-color: #40E0D0;
+}
+progress.barra-verde {
+  accent-color: #2ecc71;
+}
+
 
 
 
