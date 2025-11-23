@@ -39,25 +39,45 @@
   </style>
 </head>
 <body>
-  <!--  Cabecera del proyecto -->
-<div id="avance-proyecto" class="cabecera-proyecto">
-  <img src="assets/img/icon-192.png" alt="Dashboard Vallecas" id="icono-dashboard" style="width:64px; height:auto;">
+  <!-- 🏢 Cabecera con logo alineado y texto centrado -->
+<div id="avance-proyecto" class="cabecera-proyecto" style="display: flex; align-items: center; gap: 20px; padding: 10px; flex-wrap: wrap;">
+  
+  <!-- Logo empresa (cuadrado, alineado a la izquierda) -->
+  <div style="flex-shrink: 0;">
+    <img src="assets/img/logo-empresa.png" alt="Logo Empresa" style="height:96px; width:96px; object-fit:contain; border-radius:8px;">
+  </div>
 
-  <h1>
-    Avance Proyecto PCI – Hotel Welcome II (Vallecas)
-    <span style="background:#2ecc71; color:white; font-size:0.6em; padding:2px 6px; border-radius:4px; margin-left:8px;">
-      Versión 2.2.0
-    </span>
-  </h1>
-  <p>Central Cofem Lyon Remote</p>
-  <p><strong>Bucles:</strong> 6 &nbsp;&nbsp; <strong>Equipos:</strong> 231</p>
-  <p style="font-size:0.8em; color:#666;">By César Augusto</p>
-</div>
-<p> Avance físico global: <span id="avance-fisico-global">--%</span></p>
-  <p> Avance lógico global: <span id="avance-logico-global">--%</span></p>
+  <!-- Contenido del dashboard -->
+  <div style="flex-grow: 1; min-width: 240px;">
+    <h1 style="margin: 0;">
+      Avance Proyecto PCI – Hotel Welcome II (Vallecas)
+      <span style="background: #2ecc71; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px;">
+        Versión 2.2.1
+      </span>
+    </h1>
+    <p style="margin: 4px 0;">Central Cofem Lyon Remote</p>
+    <p style="margin: 4px 0;"><strong>Bucles:</strong> 6 &nbsp;&nbsp; <strong>Equipos:</strong> 231</p>
+    <p style="font-size: 0.8em; color: #666; margin: 4px 0;">By César Augusto</p>
+  </div>
 </div>
 
-<h2 id="avance-global">Avance global: 0%</h2>
+<!-- 📊 Avances globales alineados -->
+<div id="bloque-avances" style="margin-top:20px; text-align:left;">
+  <p><strong>Avance físico global:</strong> <span id="avance-fisico-global">--%</span></p>
+  <p><strong>Avance lógico global:</strong> <span id="avance-logico-global">--%</span></p>
+  <p><strong>Avance global:</strong> <span id="avance-global-valor">--%</span></p>
+  <p id="simbolo-global" style="margin-top:4px;">🔄 Calculando...</p>
+</div>
+
+<!-- 🎨 Leyenda separada y alineada -->
+<div id="leyenda-global" style="margin-top:10px; opacity:0.8; font-size:0.9em; text-align:left;">
+  <span style="color:#e74c3c">🔴 Menor al 50%</span> 
+  <span style="color:#f39c12">🟠 50% a 99%</span> 
+  <span style="color:#2ecc71">🟢 100% completado</span> 
+  <span style="color:#40E0D0">🔷 No aplica</span>
+</div>
+
+
 <!-- Animación de carga centrada -->
 <div id="loading-container">
   <div class="loading-box" id="loading-fisico">🔄 Cargando avance físico...</div>
@@ -198,5 +218,6 @@
   </script>
 </body>
 </html>
+
 
 
