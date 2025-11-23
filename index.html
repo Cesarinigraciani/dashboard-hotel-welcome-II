@@ -46,12 +46,12 @@
   <h1>
     Avance Proyecto PCI – Hotel Welcome II (Vallecas)
     <span style="background:#2ecc71; color:white; font-size:0.6em; padding:2px 6px; border-radius:4px; margin-left:8px;">
-      Versión 2.1.1
+      Versión 2.2.0
     </span>
   </h1>
   <p>Central Cofem Lyon Remote</p>
-  <p><strong>Bucles:</strong> 6 &nbsp;&nbsp; <strong>Equipos:</strong> 227</p>
-  <p style="font-size:0.8em; color:#666;">Actualizado por César Augusto</p>
+  <p><strong>Bucles:</strong> 6 &nbsp;&nbsp; <strong>Equipos:</strong> 231</p>
+  <p style="font-size:0.8em; color:#666;">By César Augusto</p>
 </div>
 <p> Avance físico global: <span id="avance-fisico-global">--%</span></p>
   <p> Avance lógico global: <span id="avance-logico-global">--%</span></p>
@@ -66,18 +66,32 @@
 </div>
 
 
-  <!-- 🔘 Selector inicial -->
+ <!-- 🔘 Selector inicial -->
 <div id="inicio-dashboard" class="selector-principal">
   <h2>¿Qué parte quieres visualizar?</h2>
   <div class="botonera">
     <button id="btn-fisica" class="boton-seccion"><span></span> Parte física</button>
     <button id="btn-logica" class="boton-seccion"><span></span> Parte lógica</button>
-  <button id="btn-instalar" class="boton-seccion" title="Instalar Dashboard Vallecas">
-  <img src="assets/img/icon-192.png" alt="Instalar" style="width: 32px; height: 32px; margin-right: 8px;" />
-  Instalar
-</button>
-    </div>
+    <button id="btn-instalar" class="boton-seccion" title="Instalar Dashboard Vallecas">
+      <img src="assets/img/icon-192.png" alt="Instalar" style="width: 32px; height: 32px; margin-right: 8px;" />
+      Instalar
+    </button>
+    <button id="btn-informe" class="boton-seccion" title="Generar informes del dashboard">
+      <span>📄</span> Crear informe
+    </button>
+  </div>
 </div>
+
+<!-- 📄 Menú de informes oculto -->
+<div id="menu-informe" style="display:none;">
+  <h3>Seleccione informe(s)</h3>
+  <label><input type="checkbox" value="resumen"> Informe hoja resumen</label><br>
+  <label><input type="checkbox" value="logico"> Informe avance lógico PCI</label><br>
+  <label><input type="checkbox" value="fisico"> Informe equipos instalados físicamente</label><br>
+  <label><input type="checkbox" value="config"> Informe configuraciones equipos Hotel Welcome</label><br>
+  <button id="btn-generar-pdf">Generar PDF</button>
+</div>
+
 
  <!--  Parte física -->
 <div id="dashboard-fisica" style="display:none;">
@@ -109,11 +123,11 @@
       "SIRAY+BSCL",
       "MSTAY 8",
       "MSTAY 2",
-      "MDA2 YLT",
-      "CENTRAL COFEM",
-      "BATERIAS",
-      "EXTINTORES"
-    
+      "MDA2 YLT",        // 👈 nuevo
+      "CENTRAL COFEM",   // 👈 nuevo
+      "BATERIAS",        // 👈 nuevo
+      "EXTINTORES",       // 👈 nuevo
+      "SOPORTES"
     ];
     const plantas = [
       "SOTANO",
@@ -168,17 +182,20 @@
   });
 </script>
 
-<!-- 🔗 Script principal -->
-<script src="scripts/main-v2.js"></script>
-<!-- 🛡️ Registro del Service Worker -->
-<script>
-  if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(reg => console.log('Service Worker registrado:', reg))
-    .catch(err => console.error('Error al registrar el Service Worker:', err));
-}
+  <!-- 🔗 Librería jsPDF (debe cargarse antes del script principal) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
-</script>
+  <!-- 🔗 Script principal con defer -->
+  <script src="scripts/main-v2.js" defer></script>
+
+  <!-- 🛡️ Registro del Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registrado:', reg))
+        .catch(err => console.error('Error al registrar el Service Worker:', err));
+    }
+  </script>
 </body>
 </html>
 
