@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Proyecto</title>
+  <link rel="stylesheet" href="styles/style-v2.css">
+</head>
+
+<body>
+
+<header>
+  <img src="assets/img/logo-empresa.png">
+  <div>
+    <h1 id="tituloProyecto">Proyecto</h1>
+    <h2>Aguero Instalaciones</h2>
+  </div>
+</header>
+
+<div style="text-align: center; margin-top: 20px;">
+  <button onclick="window.location.href='index.html'" style="
+    background-color: #444;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  ">
+    ⬅️ Volver al menú de proyectos
+  </button>
+</div>
+
+<div class="container" id="contenedorDashboard">
+  <!-- Aquí se generarán las tarjetas dinámicamente -->
+</div>
+
+<div style="text-align: center; margin-top: 10px;">
+  <button onclick="editarProyecto()" style="
+    background-color: #0A3D62;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  ">
+    ✏️ Modificar Proyecto
+  </button>
+</div>
+
+<script>
+  // ✅ Cargar proyecto seleccionado
+  const proyecto = JSON.parse(localStorage.getItem("proyectoSeleccionado"));
+  if (!proyecto) {
+    alert("No se encontró el proyecto");
+    window.location.href = "index.html";
+  }
+
+  // ✅ Mostrar nombre del proyecto
+  document.getElementById("tituloProyecto").textContent = proyecto.nombre;
+  const contenedor = document.getElementById("contenedorDashboard");
+
+  // ✅ Generar tarjetas por planta
+  proyecto.plantas.forEach((planta, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h3>Planta ${index + 1} – ${planta.nombre}</h3>
+      <div class="equipos"></div>
+    `;
+
+    const equiposDiv = card.querySelector(".equipos");
+
+    planta.equipos.forEach(eq => {
+      const equipoHTML = `
+        <div class="barra-resumen">
+          <label>${eq}</label>
+
+          <div class="progress-container">
+            <div class="progress-bar" 
+                 data-planta="${index}" 
+                 data-equipo="${eq}" 
+                 style="width: 0%;">
+            </div>
+          </div>
+
+          <span class="porcentaje">0%</span>
+        </div>
+      `;
+      equiposDiv.innerHTML += equipoHTML;
+    });
+
+    contenedor.appendChild(card);
+  });
+
+  // ✅ Actualizar barras desde localStorage
+  function actualizarBarras() {
+    const avance = JSON.parse(localStorage.getItem("avancePCI")) || {};
+
+    document.querySelectorAll(".progress-bar").forEach(bar => {
+      const planta = bar.dataset.planta;
+      const equipo = bar.dataset.equipo;
+
+      const valor = avance[proyecto.id]?.[planta]?.[equipo] || 0;
+
+      bar.style.width = valor + "%";
+      bar.parentElement.nextElementSibling.textContent = valor + "%";
+    });
+  }
+
+  actualizarBarras();
+
+  // ✅ ✅ FUNCIÓN CORRECTAMENTE UBICADA
+  function editarProyecto() {
+  localStorage.setItem("modoEdicion", "true");
+  window.location.href = "index.html";
+}
+localStorage.removeItem("modoEdicion");
+
+</script>
+
+</body>
+</html>
