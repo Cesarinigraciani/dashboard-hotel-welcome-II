@@ -1,0 +1,499 @@
+/* 🔧 Estilo general */
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: #f4f6f8;
+  margin: 40px;
+  color: #333;
+}
+
+/*  Cabecera del proyecto */
+.cabecera-proyecto {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 2px solid #0078d4;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.cabecera-proyecto h1 {
+  font-size: 24px;
+  color: #0078d4;
+  margin-bottom: 10px;
+}
+
+.cabecera-proyecto p {
+  font-size: 16px;
+  margin: 4px 0;
+}
+
+/* 🔘 Selector inicial */
+.selector-principal {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.selector-principal h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+/* 🔄 Animación de carga centrada */
+#loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.loading-box {
+  font-size: 1.1em;
+  color: #2c3e50;
+  background-color: #ecf0f1;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin: 6px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/*  Botonera visual mejorada */
+.botonera {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.boton-seccion {
+  width: 220px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+  background: linear-gradient(135deg, #0078d4, #00b0f0);
+  position: relative;
+  overflow: hidden;
+}
+
+.boton-seccion span {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.boton-seccion::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.4s ease;
+}
+
+.boton-seccion:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #005ea2, #0090c0);
+}
+.boton-seccion:hover::before {
+  left: 0;
+}
+
+/*  Contenedores */
+#dashboard-fisica,
+#dashboard-logica {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+/*  Fases físicas y lógicas */
+.fase,
+.fase-logica {
+  margin-bottom: 25px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #ccc;
+}
+
+.fase label,
+.fase-logica label {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
+  appearance: none;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #e0e0e0;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #e0e0e0;
+}
+
+progress::-webkit-progress-value {
+  background-color: #0078d4;
+}
+
+progress.completado::-webkit-progress-value {
+  background-color: #00c853;
+}
+
+.porcentaje {
+  display: inline-block;
+  margin-top: 5px;
+  font-weight: bold;
+  color: #0078d4;
+}
+
+progress.completado + .porcentaje {
+  color: #00c853;
+}
+
+/*  Responsive */
+@media screen and (max-width: 600px) {
+  .boton-seccion {
+    width: 100%;
+    height: auto;
+    font-size: 18px;
+    padding: 20px;
+  }
+
+  .boton-seccion span {
+    font-size: 24px;
+  }
+
+  progress {
+    height: 16px;
+  }
+}
+.boton-volver {
+  margin: 40px auto 0;         /* Centrado horizontal con margen superior */
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  display: block;              /* Asegura que ocupe toda la línea */
+  text-align: center;          /* Centra el texto dentro del botón */
+}
+
+.tarjeta-planta {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.tarjeta-planta h4 {
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.grupo-tipos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.barra-resumen label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.barra-resumen progress {
+  width: 100%;
+  height: 20px;
+}
+
+.barra-resumen .porcentaje {
+  font-size: 14px;
+  margin-left: 8px;
+}
+/*  Contenedor de tarjetas por planta */
+#contenedor-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+/* tarjeta individual por planta */
+.tarjeta-planta {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.tarjeta-planta:hover {
+  transform: scale(1.02);
+}
+/*  Estado global por planta */
+.estado-rojo {
+  border-left: 8px solid #e74c3c;
+}
+
+.estado-naranja {
+  border-left: 8px solid #f39c12;
+}
+
+.estado-amarillo {
+  border-left: 8px solid #f1c40f;
+}
+
+.estado-verde {
+  border-left: 8px solid #2ecc71;
+}
+
+
+/*  Título de cada tarjeta */
+.tarjeta-planta h4 {
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 18px;
+}
+
+/*  Grupo de tipos funcionales dentro de cada planta */
+.grupo-tipos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+/*  Barra de progreso por tipo */
+.barra-resumen label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.barra-resumen progress {
+  width: 100%;
+  height: 20px;
+}
+
+.barra-resumen .porcentaje {
+  font-size: 14px;
+  margin-left: 8px;
+}
+.frase-planta {
+  font-size: 16px;
+  font-weight: 500;
+  color: #0077cc;
+  margin-bottom: 8px;
+}
+#avance-global {
+  font-size: 1em;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+.tarjeta-planta {
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin-bottom: 1em;
+  background: #f9f9f9;
+  border-left: 6px solid transparent;
+}
+
+.grupo-fase {
+  margin: 0.5em 0;
+}
+
+.barra-logica {
+  width: 100%;
+  height: 20px;
+  margin-top: 4px;
+}
+
+.porcentaje {
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+.resumen-promedio {
+  margin-top: 1em;
+  font-weight: bold;
+  color: #333;
+}
+.barra-logica {
+  width: 100%;
+  height: 20px;
+  margin-top: 4px;
+  transition: all 1s ease-in-out;
+}
+/*  Colores motivadores para barras de avance lógico */
+.barra-verde {
+  accent-color: #2ecc71; /* verde éxito */
+}
+
+.barra-naranja {
+  accent-color: #ff9800; /* naranja medio avance */
+}
+
+.barra-roja {
+  accent-color: #f44336; /* rojo bajo avance */
+}
+
+.barra-gris {
+  accent-color: #9e9e9e; /* gris sin avance */
+}
+/*  Distribución lógica en grid */
+#avance-logico {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding-bottom: 20px;
+}
+.avance-global {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+.avance-global span {
+  color: #0078d4;
+}
+#icono-dashboard {
+  display: block;
+  margin: 12px auto;
+  max-width: 120px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.botonera {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.boton-seccion {
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #da2f2f; /* Rojo Vallecas */
+  color: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-seccion:hover {
+  background-color: #b82323;
+}
+
+.boton-seccion img {
+  width: 32px;
+  height: 32px;
+  margin-left: 4px;
+}
+#btn-instalar.instalada {
+  background-color: #4CAF50;
+  color: white;
+  cursor: default;
+  font-weight: bold;
+}
+.porcentaje.no-aplica {
+  color: #999;
+  font-style: italic;
+}
+/* 🟡 Estilo para texto "No aplica" */
+.no-aplica {
+  color: #555;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+progress.barra-turquesa::-webkit-progress-value {
+  background-color: #40E0D0; /* turquesa exacto */
+}
+progress.barra-turquesa::-moz-progress-bar {
+  background-color: #40E0D0; /* turquesa en Firefox */
+}
+
+/* ✅ Refuerzo para navegadores que no respetan accent-color */
+progress.barra-verde::-webkit-progress-value {
+  background-color: #2ecc71; /* verde */
+}
+progress.barra-verde::-moz-progress-bar {
+  background-color: #2ecc71; /* verde en Firefox */
+}
+progress.barra-turquesa {
+  accent-color: #40E0D0;
+}
+progress.barra-verde {
+  accent-color: #2ecc71;
+}
+/* --- Estilos responsivos para la botonera --- */
+.botonera {
+  display: flex;
+  flex-wrap: wrap;              /* permite que los botones se acomoden en varias filas */
+  justify-content: flex-start;  /* alineados a la izquierda */
+  gap: 10px;                    /* espacio entre botones */
+}
+
+.boton-seccion {
+  flex: 1 1 200px;              /* cada botón ocupa mínimo 200px y se adapta */
+  text-align: left;             /* texto alineado a la izquierda */
+  padding: 10px 16px;
+  font-size: 1em;
+}
+
+/* 📱 Ajuste especial para pantallas pequeñas */
+@media (max-width: 600px) {
+  .botonera {
+    flex-direction: column;     /* en móviles, los botones se apilan en columna */
+    align-items: stretch;
+  }
+  .boton-seccion {
+    width: 100%;                /* cada botón ocupa todo el ancho */
+    text-align: center;         /* opcional: centrado en móvil para mejor legibilidad */
+  }
+}
+.indicador-planta {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #0078d4;
+}
