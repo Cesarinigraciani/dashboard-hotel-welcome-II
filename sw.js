@@ -1,22 +1,57 @@
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open('dashboard-cache').then(cache => {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/main.js',
-        '/styles.css',
-        '/icon-192.png',
-        '/icon-512.png'
-      ]);
+const CACHE_NAME = "dashboard-cache-v3"; // cambia versión al actualizar
+const URLS_TO_CACHE = [
+  "/",                       // raíz
+  "/index.html",             // inicio
+  "/dashboard_misterios.html",
+  "/dashboard_welcome.html",
+  "/dashboard_dinamico.html",
+  "/scripts/main_misterios.js",
+  "/scripts/main-v2.js",
+  "/styles/style-v2.css",
+ "/styles/styles-residencias-misterios.css",
+  "/assets/img/logo-empresa.png",
+  "/assets/img/icon-192.png",
+  "/assets/img/icon-512.png"
+];
+
+// 📥 Instalación: cachea archivos básicos
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(URLS_TO_CACHE);
     })
   );
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(response => {
-      return response || fetch(e.request);
-    })
+// ♻️ Activación: limpia cachés antiguas
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
+});
+
+// 🌐 Fetch: intenta red primero, si falla usa caché
+self.addEventListener("fetch", event => {
+  if (!event.request.url.startsWith("http")) {
+    return; // ignora chrome-extension:// y otros esquemas
+  }
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, clone);
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
