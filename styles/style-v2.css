@@ -493,6 +493,205 @@ progress.barra-verde {
   }
 }
 
+/* ✅ Encabezado principal mejorado */
+header {
+  display: flex;
+  align-items: center;
+  background: #004080;          /* azul corporativo */
+  color: white;
+  padding: 28px 40px;           /* más alto y más ancho */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+/* ✅ Logo más grande y con mejor presencia */
+header img {
+  height: 95px;                 /* antes 60px → ahora más visible */
+  margin-right: 28px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* ✅ Títulos más grandes y mejor alineados */
+header h1 {
+  margin: 0;
+  font-size: 30px;              /* antes 24px */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+header h2 {
+  margin: 4px 0 0 0;
+  font-size: 20px;              /* antes 18px */
+  font-weight: 400;
+  opacity: 0.95;
+}
+/* ✅ Botones principales en index.html */
+.container button {
+  font-size: 20px;              /* más grande */
+  padding: 16px 32px;           /* más alto y más ancho */
+  margin: 16px 12px;            /* más espacio entre botones */
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 10px;          /* esquinas más suaves */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* sombra elegante */
+  transition: all 0.3s ease;
+}
+
+.container button:hover {
+  background: #0055aa;
+  transform: scale(1.03);       /* efecto sutil al pasar el mouse */
+}
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.barra-resumen {
+  margin-top: 10px;
+}
+
+.progress-container {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 20px;
+  margin: 5px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #888;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.porcentaje {
+  font-weight: bold;
+  margin-left: 8px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* Contenedor del formulario */
+.form-proyecto {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Título */
+.form-proyecto h3 {
+  text-align: center;
+  color: #0A3D62;
+  margin-bottom: 25px;
+}
+
+/* Grupo de inputs */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+/* Etiquetas */
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* Inputs */
+.form-group input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #0A3D62;
+  outline: none;
+}
+
+/* Filas de dos columnas */
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+/* Botones */
+.btn-primario {
+  width: 100%;
+  padding: 14px;
+  background: #0A3D62;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+}
+
+.btn-primario:hover {
+  background: #145A8A;
+}
+
+.btn-secundario {
+  width: 100%;
+  padding: 12px;
+  background: #1E8449;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.btn-secundario:hover {
+  background: #27AE60;
+}
+
+/* Tarjetas de plantas */
+.tarjeta-planta {
+  background: #f4f6f7;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border-left: 5px solid #0A3D62;
+}
+.subfirma {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #e0e0e0;
+  margin-top: 4px;
+}
+
+
+
 
 
 
