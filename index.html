@@ -2,222 +2,499 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard PCI - Versión 2</title>
- <link rel="manifest" href="./manifest.json">
+  <title>Dashboard PCI – Inicio</title>
   <link rel="stylesheet" href="styles/style-v2.css" />
-  <style>
-    .tarjeta-planta {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 20px;
-      background-color: #f9f9f9;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .tarjeta-planta h4 {
-      margin-bottom: 12px;
-      color: #333;
-    }
-    .grupo-tipos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-    }
-    .barra-resumen label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 4px;
-    }
-    .barra-resumen progress {
-      width: 100%;
-      height: 20px;
-    }
-    .barra-resumen .porcentaje {
-      font-size: 14px;
-      margin-left: 8px;
-    }
-  </style>
 </head>
+
 <body>
-  <!-- 🏢 Cabecera con logo alineado y texto centrado -->
-<div id="avance-proyecto" class="cabecera-proyecto" style="display: flex; align-items: center; gap: 20px; padding: 10px; flex-wrap: wrap;">
-  
-  <!-- Logo empresa (cuadrado, alineado a la izquierda) -->
-  <div style="flex-shrink: 0;">
-    <img src="assets/img/logo-empresa.png" alt="Logo Empresa" style="height:96px; width:96px; object-fit:contain; border-radius:8px;">
+
+  <!-- 🏢 Cabecera principal -->
+<header class="header-principal">
+  <img src="assets/img/logo-empresa.png" alt="Logo Aguero Instalaciones">
+
+  <div class="titulo-principal">
+    <h1>AVANCES PROYECTOS PCI</h1>
+    <h2>Aguero Instalaciones</h2>
+  <h3 class="subfirma">v3.0.0 — By: César Augusto</h3>
   </div>
+</header>
 
-  <!-- Contenido del dashboard -->
-  <div style="flex-grow: 1; min-width: 240px;">
-    <h1 style="margin: 0;">
-      Avance Proyecto PCI – Hotel Welcome II (Vallecas)
-      <span style="background: #2ecc71; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px;">
-        Versión 2.2.1
-      </span>
-    </h1>
-    <p style="margin: 4px 0;">Central Cofem Lyon Remote</p>
-    <p style="margin: 4px 0;"><strong>Bucles:</strong> 6 &nbsp;&nbsp; <strong>Equipos:</strong> 231</p>
-    <p style="font-size: 0.8em; color: #666; margin: 4px 0;">By César Augusto</p>
+  <!-- 🔘 Botones principales -->
+  <div class="container">
+    <button onclick="mostrarFormulario()"> Generar Proyecto Nuevo</button>
+    <button onclick="mostrarLista()"> Abrir Proyecto Existente</button>
+    <button onclick="modificarProyecto()"> Modificar Proyecto</button>
+    <button onclick="borrarProyecto()"> Borrar Proyecto</button>
+    <button onclick="modificarPlantas()"> Modificar Plantas</button>
+
+    <!-- 📝 Formulario nuevo proyecto -->
+    <form id="formProyecto" class="form-proyecto" style="display: none;">
+      <h3>Crear Nuevo Proyecto</h3>
+
+      <div class="form-group">
+        <label>Nombre del Proyecto</label>
+        <input type="text" name="nombre" placeholder="Ej. Residencias Misterios">
+      </div>
+
+      <div class="form-group">
+        <label>Dirección</label>
+        <input type="text" name="direccion" placeholder="Ej. Calle Fuego 123">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Código Postal</label>
+          <input type="text" name="cp" placeholder="28053">
+        </div>
+
+        <div class="form-group">
+          <label>Ciudad</label>
+          <input type="text" name="ciudad" placeholder="Madrid">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Ingeniero Técnico Encargado</label>
+        <input type="text" name="ingeniero" placeholder="Ej. Juan Pérez">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha Inicio de Obra</label>
+          <input type="date" name="fecha">
+        </div>
+
+        <div class="form-group">
+          <label>Tiempo estimado (horas)</label>
+          <input type="number" name="tiempo" placeholder="120">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Técnico Encargado PCI</label>
+        <input type="text" name="tecnico" placeholder="Ej. César Augusto">
+      </div>
+
+      <button type="button" class="btn-secundario" onclick="generarPlantas()"> Configurar Plantas</button>
+
+      <div id="panelPlantas" style="display:none; margin-top:20px;">
+        <label>Número de plantas:</label>
+        <input type="number" id="numPlantas" min="1" max="20" value="1">
+
+        <button type="button" class="btn-secundario" onclick="crearTarjetasPlantas()">Generar</button>
+
+        <div id="contenedorPlantas" style="margin-top:20px;"></div>
+      </div>
+
+      <button type="button" class="btn-primario" onclick="guardarProyecto()">💾 Guardar Proyecto</button>
+    </form>
+
+   <!-- 📂 Lista de proyectos existentes -->
+<div id="listaProyectos" style="display: none;">
+  <h3>Proyectos Existentes</h3>
+
+  <!-- ✅ Selector de proyectos -->
+  <select id="proyectosSelect" style="display: block; margin-bottom: 15px;">
+    <option value="">Seleccione un proyecto...</option>
+  </select>
+
+  <!-- ✅ Botones de acciones -->
+  <div class="acciones-proyecto">
+    <button onclick="modificarProyecto()"> Modificar Proyecto</button>
+    <button onclick="borrarProyecto()"> Borrar Proyecto</button>
+    <button onclick="modificarPlantas()"> Modificar Plantas</button>
+    <button onclick="abrirProyectoSeleccionado()"> Abrir Proyecto</button>
+
   </div>
-</div>
+ </div>   
+</div>   
+ <script>
 
-<!-- 📊 Avances globales alineados -->
-<div id="bloque-avances" style="margin-top:20px; text-align:left;">
-  <p><strong>Avance físico global:</strong> <span id="avance-fisico-global">--%</span></p>
-  <p><strong>Avance lógico global:</strong> <span id="avance-logico-global">--%</span></p>
-  <p><strong>Avance global:</strong> <span id="avance-global-valor">--%</span></p>
-  <p id="simbolo-global" style="margin-top:4px;">🔄 Calculando...</p>
-</div>
+  /* ✅ Detectar si venimos a editar un proyecto */
+  window.addEventListener("load", () => {
+  const modoEdicion = localStorage.getItem("modoEdicion");
+  const proyecto = JSON.parse(localStorage.getItem("proyectoSeleccionado"));
 
-<!-- 🎨 Leyenda separada y alineada -->
-<div id="leyenda-global" style="margin-top:10px; opacity:0.8; font-size:0.9em; text-align:left;">
-  <span style="color:#e74c3c">🔴 Menor al 50%</span> 
-  <span style="color:#f39c12">🟠 50% a 99%</span> 
-  <span style="color:#2ecc71">🟢 100% completado</span> 
-  <span style="color:#40E0D0">🔷 No aplica</span>
-</div>
+  if (modoEdicion === "true" && proyecto && proyecto.id) {
+    mostrarFormulario();
+    cargarProyectoEnFormulario(proyecto);
+    localStorage.removeItem("modoEdicion");
+  }
+});
 
 
-<!-- Animación de carga centrada -->
-<div id="loading-container">
-  <div class="loading-box" id="loading-fisico">🔄 Cargando avance físico...</div>
-  <div class="loading-box" id="loading-logico">🔄 Cargando avance lógico...</div>
-  <div class="loading-box" id="loading-global">🔄 Calculando avance global...</div>
-</div>
+  /* ✅ Mostrar formulario */
+  function mostrarFormulario() {
+    document.getElementById('formProyecto').style.display = 'block';
+    document.getElementById('listaProyectos').style.display = 'none';
+    document.getElementById('proyectosSelect').style.display = 'none';
+  }
 
+  /* ✅ Mostrar lista de proyectos */
+  function mostrarLista() {
+    document.getElementById('formProyecto').style.display = 'none';
+    document.getElementById('listaProyectos').style.display = 'block';
 
- <!-- 🔘 Selector inicial -->
-<div id="inicio-dashboard" class="selector-principal">
-  <h2>¿Qué parte quieres visualizar?</h2>
-  <div class="botonera">
-    <button id="btn-fisica" class="boton-seccion"><span></span> Parte física</button>
-    <button id="btn-logica" class="boton-seccion"><span></span> Parte lógica</button>
-    <button id="btn-instalar" class="boton-seccion" title="Instalar Dashboard Vallecas">
-      <img src="assets/img/icon-192.png" alt="Instalar" style="width: 32px; height: 32px; margin-right: 8px;" />
-      Instalar
-    </button>
-    <button id="btn-informe" class="boton-seccion" title="Generar informes del dashboard">
-      <span>📄</span> Crear informe
-    </button>
-  </div>
-</div>
+    const select = document.getElementById('proyectosSelect');
+    select.style.display = "block";
+    select.innerHTML = `<option value="">Seleccione un proyecto...</option>`;
 
-<!-- 📄 Menú de informes oculto -->
-<div id="menu-informe" style="display:none;">
-  <h3>Seleccione informe(s)</h3>
-  <label><input type="checkbox" value="resumen"> Informe hoja resumen</label><br>
-  <label><input type="checkbox" value="logico"> Informe avance lógico PCI</label><br>
-  <label><input type="checkbox" value="fisico"> Informe equipos instalados físicamente</label><br>
-  <label><input type="checkbox" value="config"> Informe configuraciones equipos Hotel Welcome</label><br>
-  <button id="btn-generar-pdf">Generar PDF</button>
-</div>
+    const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
 
+    lista.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p.id;
+      opt.textContent = p.nombre;
+      select.appendChild(opt);
+    });
 
- <!--  Parte física -->
-<div id="dashboard-fisica" style="display:none;">
-  <h3> Instalación física por planta</h3>
-  <div id="contenedor-tarjetas"></div>
-  <button id="btn-volver-fisica" class="boton-volver">⬅️ Volver al inicio</button>
-</div>
+    // ✅ Proyectos fijos
+    select.appendChild(new Option("Hotel Welcome II", "welcomeII"));
+    select.appendChild(new Option("Residencias Misterios", "misterios"));
+  }
 
-<!--  Parte lógica -->
-<div id="dashboard-logica" style="display:none;">
-  <h3> Parte lógica</h3>
-  <div id="avance-logico"></div>
+  /* ✅ Abrir proyecto */
+  function abrirProyecto(id) {
+    if (!id) return;
 
-  <!-- ✅ Botón único y bien ubicado -->
-  <button id="btn-volver-logica" class="boton-volver">⬅️ Volver al inicio</button>
-</div>
+    // ✅ Dashboards fijos
+    if (id === "welcomeII") {
+      window.location.href = "dashboard_welcome.html";
+      return;
+    }
 
- <!-- 🧩 Script para generar tarjetas por planta -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const tipos = [
-      "ZOCALOS",
-      "MDA1Y",
-      "KAMAY",
-      "KIT-PMR",
-      "FUENTE AUXILIAR",
-      "DETECTORES",
-      "PUKAY",
-      "SIRAY+BSCL",
-      "MSTAY 8",
-      "MSTAY 2",
-      "MDA2 YLT",        // 👈 nuevo
-      "CENTRAL COFEM",   // 👈 nuevo
-      "BATERIAS",        // 👈 nuevo
-      "EXTINTORES",       // 👈 nuevo
-      "SOPORTES"
-    ];
-    const plantas = [
-      "SOTANO",
-      "BAJA",
-      "PRIMERA",
-      "SEGUNDA",
-      "TERCERA",
-      "CUARTA A",
-      "CUARTA B",
-      "CUBIERTA"
-    ];
-    const contenedor = document.getElementById("contenedor-tarjetas");
+    if (id === "misterios") {
+      window.location.href = "dashboard_misterios.html";
+      return;
+    }
 
-    // Función de normalización
-   const normalizar = str =>
-  String(str || "")
-    .toUpperCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // quita tildes
-    .replace(/[^A-Z0-9]/g, " ")      // reemplaza guiones, signos, etc. por espacio
-    .replace(/\s+/g, " ")            // normaliza espacios múltiples
-    .trim();
+    // ✅ Proyectos dinámicos
+    const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+    const proyecto = lista.find(p => p.id == id);
 
-    plantas.forEach(planta => {
+    if (!proyecto) {
+      alert("Proyecto no encontrado");
+      return;
+    }
+
+    localStorage.setItem("proyectoSeleccionado", JSON.stringify(proyecto));
+    window.location.href = "dashboard_dinamico.html";
+  }
+
+  /* ✅ Botón: Abrir proyecto seleccionado */
+  function abrirProyectoSeleccionado() {
+    const id = document.getElementById("proyectosSelect").value;
+
+    if (!id) {
+      alert("Seleccione un proyecto primero");
+      return;
+    }
+
+    abrirProyecto(id);
+  }
+
+  /* ✅ Mostrar panel de plantas */
+  function generarPlantas() {
+    document.getElementById("panelPlantas").style.display = "block";
+  }
+/* ✅ Modificar proyecto */
+function modificarProyecto() {
+  const id = document.getElementById("proyectosSelect").value;
+
+  if (!id) {
+    alert("Seleccione un proyecto primero");
+    return;
+  }
+
+  // ❌ Proyectos fijos NO se modifican
+  if (id === "welcomeII" || id === "misterios") {
+    alert("Este proyecto no permite modificación de datos");
+    return;
+  }
+
+  const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+  const proyecto = lista.find(p => p.id == id);
+
+  if (!proyecto) {
+    alert("Proyecto no encontrado");
+    return;
+  }
+
+  localStorage.setItem("proyectoSeleccionado", JSON.stringify(proyecto));
+  localStorage.setItem("modoEdicion", "true");
+
+  mostrarFormulario();
+  cargarProyectoEnFormulario(proyecto);
+}
+/* ✅ Borrar proyecto */
+function borrarProyecto() {
+  const id = document.getElementById("proyectosSelect").value;
+
+  if (!id) {
+    alert("Seleccione un proyecto primero");
+    return;
+  }
+
+  // ❌ Proyectos fijos NO se borran
+  if (id === "welcomeII" || id === "misterios") {
+    alert("Este proyecto no se puede borrar");
+    return;
+  }
+
+  let lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+  lista = lista.filter(p => p.id != id);
+
+  localStorage.setItem("proyectosPCI", JSON.stringify(lista));
+
+  alert("✅ Proyecto borrado correctamente");
+  window.location.reload();
+}
+
+  /* ✅ Crear tarjetas de plantas */
+  function crearTarjetasPlantas() {
+    const num = parseInt(document.getElementById("numPlantas").value);
+    const contenedor = document.getElementById("contenedorPlantas");
+    contenedor.innerHTML = "";
+
+    for (let i = 1; i <= num; i++) {
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-planta";
-      tarjeta.setAttribute("data-planta", normalizar(planta));
+      tarjeta.innerHTML = `
+        <h4>Planta ${i}</h4>
 
-      const titulo = document.createElement("h4");
-      titulo.textContent = `Planta ${planta}`;
-      tarjeta.appendChild(titulo);
+        <label>Nombre personalizado:
+          <input type="text" class="nombre-planta" placeholder="Ej: Planta ${i}"
+>
+        </label>
 
-      const grupo = document.createElement("div");
-      grupo.className = "grupo-tipos";
+        <label>Equipos a instalar:</label>
+        <select class="select-equipos">
+          <option value="Detectores">Detectores</option>
+          <option value="Siray+Bscl">Siray+Bscl</option>
+          <option value="Zocalos">Zócalos</option>
+          <option value="Central">Central Cofem</option>
+          <option value="Baterias">Baterías</option>
+          <option value="Pukay">Pukay</option>
+          <option value="Mstay 8">Mstay 8</option>
+          <option value="Mda2 Ylt">Mdy2 Ylt</option>
+          <option value="Kamay">Kamay</option>
+          <option value="Kit-Pmr">Kit-Pmr</option>
+          <option value="Mda1y">Mda1y</option>
+          <option value="Fuente Auxiliar">Fuente Auxiliar</option>
+          <option value="Extintores">Extintores</option>
+          <option value="Soportes">Soportes</option>
+        </select>
 
-      tipos.forEach(tipo => {
-        const barra = document.createElement("div");
-        barra.className = "barra-resumen";
-        barra.setAttribute("data-tipo", normalizar(tipo));
-        barra.setAttribute("data-planta", normalizar(planta));
-        barra.innerHTML = `
-          <label>${tipo}</label>
-          <progress></progress>
-          <span class="porcentaje">0%</span>
-        `;
-        grupo.appendChild(barra);
-      });
+        <button type="button" onclick="agregarEquipo(this)">Añadir equipo</button>
 
-      tarjeta.appendChild(grupo);
+        <ul class="lista-equipos"></ul>
+      `;
       contenedor.appendChild(tarjeta);
+    // ✅ Sincronizar nombre personalizado con el título
+const inputNombre = tarjeta.querySelector(".nombre-planta");
+const titulo = tarjeta.querySelector("h4");
+
+inputNombre.addEventListener("input", () => {
+  const nuevoNombre = inputNombre.value.trim();
+  titulo.textContent = nuevoNombre || `Planta ${i}`;
+});
+
+    }
+  }
+
+  /* ✅ Modificar plantas */
+  function modificarPlantas() {
+    const id = document.getElementById("proyectosSelect").value;
+
+    if (!id) {
+      alert("Seleccione un proyecto primero");
+      return;
+    }
+
+    // ❌ Proyectos fijos NO se modifican
+    if (id === "welcomeII" || id === "misterios") {
+      alert("Este proyecto no permite modificar plantas");
+      return;
+    }
+
+    const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+    const proyecto = lista.find(p => p.id == id);
+
+    if (!proyecto) {
+      alert("Proyecto no encontrado");
+      return;
+    }
+
+    localStorage.setItem("proyectoSeleccionado", JSON.stringify(proyecto));
+    localStorage.setItem("modoEdicion", "true");
+
+    window.location.href = "index.html#panelPlantas";
+  }
+
+  /* ✅ Añadir equipo a una planta */
+  function agregarEquipo(btn) {
+    const tarjeta = btn.closest(".tarjeta-planta");
+    const select = tarjeta.querySelector(".select-equipos");
+    const lista = tarjeta.querySelector(".lista-equipos");
+
+    const li = document.createElement("li");
+    li.textContent = select.value;
+    lista.appendChild(li);
+  }
+
+  /* ✅ Guardar proyecto nuevo */
+  function guardarProyecto() {
+    const plantas = [];
+    document.querySelectorAll(".tarjeta-planta").forEach(t => {
+      const nombre = t.querySelector(".nombre-planta").value || "Sin nombre";
+      const equipos = Array.from(t.querySelectorAll(".lista-equipos li"))
+                           .map(li => li.textContent);
+      plantas.push({ nombre, equipos });
     });
+
+    const proyecto = {
+      id: Date.now(),
+      nombre: document.querySelector("input[name='nombre']").value,
+      direccion: document.querySelector("input[name='direccion']").value,
+      cp: document.querySelector("input[name='cp']").value,
+      ciudad: document.querySelector("input[name='ciudad']").value,
+      ingeniero: document.querySelector("input[name='ingeniero']").value,
+      fecha: document.querySelector("input[name='fecha']").value,
+      tiempo: document.querySelector("input[name='tiempo']").value,
+      tecnico: document.querySelector("input[name='tecnico']").value,
+      plantas
+    };
+
+    let lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+    lista.push(proyecto);
+    localStorage.setItem("proyectosPCI", JSON.stringify(lista));
+
+    alert("✅ Proyecto guardado correctamente");
+    window.location.reload();
+  }
+/* ✅ Guardar cambios en un proyecto existente */
+function guardarCambios() {
+  const proyecto = JSON.parse(localStorage.getItem("proyectoSeleccionado"));
+  if (!proyecto) {
+    alert("Error: no hay proyecto cargado");
+    return;
+  }
+
+  // ✅ Actualizar datos del formulario
+  proyecto.nombre = document.querySelector("input[name='nombre']").value;
+  proyecto.direccion = document.querySelector("input[name='direccion']").value;
+  proyecto.cp = document.querySelector("input[name='cp']").value;
+  proyecto.ciudad = document.querySelector("input[name='ciudad']").value;
+  proyecto.ingeniero = document.querySelector("input[name='ingeniero']").value;
+  proyecto.fecha = document.querySelector("input[name='fecha']").value;
+  proyecto.tiempo = document.querySelector("input[name='tiempo']").value;
+  proyecto.tecnico = document.querySelector("input[name='tecnico']").value;
+
+  // ✅ Actualizar plantas
+  proyecto.plantas = [];
+  document.querySelectorAll(".tarjeta-planta").forEach(t => {
+    const nombre = t.querySelector(".nombre-planta").value || "Sin nombre";
+    const equipos = Array.from(t.querySelectorAll(".lista-equipos li"))
+                         .map(li => li.textContent);
+
+    proyecto.plantas.push({ nombre, equipos });
   });
+
+  // ✅ Guardar en localStorage
+  let lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+  const index = lista.findIndex(p => p.id == proyecto.id);
+
+  if (index !== -1) {
+    lista[index] = proyecto;
+  }
+
+  localStorage.setItem("proyectosPCI", JSON.stringify(lista));
+
+  alert("✅ Cambios guardados correctamente");
+
+  // ✅ Limpiar estado y volver al index
+  localStorage.removeItem("modoEdicion");
+  localStorage.removeItem("proyectoSeleccionado");
+  window.location.href = "index.html";
+}
+
+  /* ✅ Cargar proyecto en modo edición */
+  function cargarProyectoEnFormulario(proyecto) {
+    document.querySelector("input[name='nombre']").value = proyecto.nombre || "";
+    document.querySelector("input[name='direccion']").value = proyecto.direccion || "";
+    document.querySelector("input[name='cp']").value = proyecto.cp || "";
+    document.querySelector("input[name='ciudad']").value = proyecto.ciudad || "";
+    document.querySelector("input[name='ingeniero']").value = proyecto.ingeniero || "";
+    document.querySelector("input[name='fecha']").value = proyecto.fecha || "";
+    document.querySelector("input[name='tiempo']").value = proyecto.tiempo || "";
+    document.querySelector("input[name='tecnico']").value = proyecto.tecnico || "";
+
+    const contenedor = document.getElementById("contenedorPlantas");
+    contenedor.innerHTML = "";
+    document.getElementById("panelPlantas").style.display = "block";
+
+    proyecto.plantas.forEach((planta, index) => {
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta-planta";
+
+      tarjeta.innerHTML = `
+        <h4>Planta ${index + 1}</h4>
+
+        <label>Nombre personalizado:
+          <input type="text" class="nombre-planta" value="${planta.nombre}">
+        </label>
+
+        <label>Equipos a instalar:</label>
+        <select class="select-equipos">
+          <option value="Detectores">Detectores</option>
+          <option value="Siray+Bscl">Siray+Bscl</option>
+          <option value="Zocalos">Zócalos</option>
+          <option value="Central">Central Cofem</option>
+          <option value="Baterias">Baterías</option>
+          <option value="Pukay">Pukay</option>
+          <option value="Mstay 8">Mstay 8</option>
+          <option value="Mda2 Ylt">Mdy2 Ylt</option>
+          <option value="Kamay">Kamay</option>
+          <option value="Kit-Pmr">Kit-Pmr</option>
+          <option value="Mda1y">Mda1y</option>
+          <option value="Fuente Auxiliar">Fuente Auxiliar</option>
+          <option value="Extintores">Extintores</option>
+          <option value="Soportes">Soportes</option>
+        </select>
+
+        <button type="button" onclick="agregarEquipo(this)">Añadir equipo</button>
+        <button type="button" class="btn-eliminar-planta"> Eliminar planta</button>
+       
+        <ul class="lista-equipos">
+          ${planta.equipos.map(eq => `<li>${eq}</li>`).join("")}
+        </ul>
+      `;
+      contenedor.appendChild(tarjeta);
+   // ✅ Sincronizar nombre personalizado con el título
+const inputNombre = tarjeta.querySelector(".nombre-planta");
+const titulo = tarjeta.querySelector("h4");
+
+inputNombre.addEventListener("input", () => {
+  const nuevoNombre = inputNombre.value.trim();
+  titulo.textContent = nuevoNombre || `Planta ${i}`;
+});
+
+// ✅ Eliminar tarjeta de planta
+const btnEliminar = tarjeta.querySelector(".btn-eliminar-planta");
+btnEliminar.addEventListener("click", () => {
+  tarjeta.remove();
+    });
+ });
+
+    const btnGuardar = document.querySelector(".btn-primario");
+    btnGuardar.textContent = "💾 Guardar Cambios";
+    btnGuardar.onclick = guardarCambios;
+  }
 </script>
 
-  <!-- 🔗 Librería jsPDF (debe cargarse antes del script principal) -->
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-
-  <!-- 🔗 Script principal con defer -->
-  <script src="scripts/main-v2.js" defer></script>
-
-  <!-- 🛡️ Registro del Service Worker -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('Service Worker registrado:', reg))
-        .catch(err => console.error('Error al registrar el Service Worker:', err));
-    }
-  </script>
 </body>
 </html>
+
 
 
 
