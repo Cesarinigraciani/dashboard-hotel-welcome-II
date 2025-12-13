@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard PCI - Versión 2</title>
+ <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="styles/style-v2.css" />
+  <style>
+    .tarjeta-planta {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .tarjeta-planta h4 {
+      margin-bottom: 12px;
+      color: #333;
+    }
+    .grupo-tipos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .barra-resumen label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .barra-resumen progress {
+      width: 100%;
+      height: 20px;
+    }
+    .barra-resumen .porcentaje {
+      font-size: 14px;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🏢 Cabecera con logo alineado y texto centrado -->
+<div id="avance-proyecto" class="cabecera-proyecto" style="display: flex; align-items: center; gap: 20px; padding: 10px; flex-wrap: wrap;">
+  
+  <!-- Logo empresa (cuadrado, alineado a la izquierda) -->
+  <div style="flex-shrink: 0;">
+    <img src="assets/img/logo-empresa.png" alt="Logo Empresa" style="height:96px; width:96px; object-fit:contain; border-radius:8px;">
+  </div>
+
+  <!-- Contenido del dashboard -->
+  <div style="flex-grow: 1; min-width: 240px;">
+    <h1 style="margin: 0;">
+      Avance Proyecto PCI – Hotel Welcome II (Vallecas)
+      
+    </h1>
+    <p style="margin: 4px 0;">Central Cofem Lyon Remote</p>
+    <p style="margin: 4px 0;"><strong>Bucles:</strong> 6 &nbsp;&nbsp; <strong>Equipos:</strong> 231</p>
+    <p style="font-size: 0.8em; color: #666; margin: 4px 0;">By César Augusto</p>
+  </div>
+</div>
+
+<!-- 📊 Avances globales alineados -->
+<div id="bloque-avances" style="margin-top:20px; text-align:left;">
+  <p><strong>Avance físico global:</strong> <span id="avance-fisico-global">--%</span></p>
+  <p><strong>Avance lógico global:</strong> <span id="avance-logico-global">--%</span></p>
+  <p><strong>Avance global:</strong> <span id="avance-global-valor">--%</span></p>
+  <p id="simbolo-global" style="margin-top:4px;">🔄 Calculando...</p>
+</div>
+
+<!-- 🎨 Leyenda separada y alineada -->
+<div id="leyenda-global" style="margin-top:10px; opacity:0.8; font-size:0.9em; text-align:left;">
+  <span style="color:#e74c3c">🔴 Menor al 50%</span> 
+  <span style="color:#f39c12">🟠 50% a 99%</span> 
+  <span style="color:#2ecc71">🟢 100% completado</span> 
+  <span style="color:#40E0D0">🔷 No aplica</span>
+</div>
+
+
+<!-- Animación de carga centrada -->
+<div id="loading-container">
+  <div class="loading-box" id="loading-fisico">🔄 Cargando avance físico...</div>
+  <div class="loading-box" id="loading-logico">🔄 Cargando avance lógico...</div>
+  <div class="loading-box" id="loading-global">🔄 Calculando avance global...</div>
+</div>
+
+
+ <!-- 🔘 Selector inicial -->
+<div id="inicio-dashboard" class="selector-principal">
+  <h2>¿Qué parte quieres visualizar?</h2>
+  <div class="botonera">
+    <button id="btn-fisica" class="boton-seccion"><span></span> Parte física</button>
+    <button id="btn-logica" class="boton-seccion"><span></span> Parte lógica</button>
+    <button id="btn-instalar" class="boton-seccion" title="Instalar Dashboard Vallecas">
+      <img src="assets/img/icon-192.png" alt="Instalar" style="width: 32px; height: 32px; margin-right: 8px;" />
+      Instalar
+    </button>
+    <button id="btn-informe" class="boton-seccion" title="Generar informes del dashboard">
+      <span>📄</span> Crear informe
+    <button id="btn-inicio" class="boton-seccion" title="Volver al selector de proyectos">
+  ⬅️ Inicio
+    </button>
+  </div>
+</div>
+
+<!-- 📄 Menú de informes oculto -->
+<div id="menu-informe" style="display:none;">
+  <h3>Seleccione informe(s)</h3>
+  <label><input type="checkbox" value="resumen"> Informe hoja resumen</label><br>
+  <label><input type="checkbox" value="logico"> Informe avance lógico PCI</label><br>
+  <label><input type="checkbox" value="fisico"> Informe equipos instalados físicamente</label><br>
+  <label><input type="checkbox" value="config"> Informe configuraciones equipos Hotel Welcome</label><br>
+  <button id="btn-generar-pdf">Generar PDF</button>
+</div>
+
+
+ <!--  Parte física -->
+<div id="dashboard-fisica" style="display:none;">
+  <h3> Instalación física por planta</h3>
+  <div id="contenedor-tarjetas"></div>
+  <button id="btn-volver-fisica" class="boton-volver">⬅️ Volver al inicio</button>
+</div>
+
+<!--  Parte lógica -->
+<div id="dashboard-logica" style="display:none;">
+  <h3> Parte lógica</h3>
+  <div id="avance-logico"></div>
+
+  <!-- ✅ Botón único y bien ubicado -->
+  <button id="btn-volver-logica" class="boton-volver">⬅️ Volver al inicio</button>
+</div>
+
+ <!-- 🧩 Script para generar tarjetas por planta -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tipos = [
+      "ZOCALOS",
+      "MDA1Y",
+      "KAMAY",
+      "KIT-PMR",
+      "FUENTE AUXILIAR",
+      "DETECTORES",
+      "PUKAY",
+      "SIRAY+BSCL",
+      "MSTAY 8",
+      "MSTAY 2",
+      "MDA2 YLT",        // 👈 nuevo
+      "CENTRAL COFEM",   // 👈 nuevo
+      "BATERIAS",        // 👈 nuevo
+      "EXTINTORES",       // 👈 nuevo
+      "SOPORTES"
+    ];
+    const plantas = [
+      "SOTANO",
+      "BAJA",
+      "PRIMERA",
+      "SEGUNDA",
+      "TERCERA",
+      "CUARTA A",
+      "CUARTA B",
+      "CUBIERTA"
+    ];
+    const contenedor = document.getElementById("contenedor-tarjetas");
+
+    // Función de normalización
+   const normalizar = str =>
+  String(str || "")
+    .toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // quita tildes
+    .replace(/[^A-Z0-9]/g, " ")      // reemplaza guiones, signos, etc. por espacio
+    .replace(/\s+/g, " ")            // normaliza espacios múltiples
+    .trim();
+
+    plantas.forEach(planta => {
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta-planta";
+      tarjeta.setAttribute("data-planta", normalizar(planta));
+
+      const titulo = document.createElement("h4");
+      titulo.textContent = `Planta ${planta}`;
+      tarjeta.appendChild(titulo);
+
+      const grupo = document.createElement("div");
+      grupo.className = "grupo-tipos";
+
+      tipos.forEach(tipo => {
+        const barra = document.createElement("div");
+        barra.className = "barra-resumen";
+        barra.setAttribute("data-tipo", normalizar(tipo));
+        barra.setAttribute("data-planta", normalizar(planta));
+        barra.innerHTML = `
+          <label>${tipo}</label>
+          <progress></progress>
+          <span class="porcentaje">0%</span>
+        `;
+        grupo.appendChild(barra);
+      });
+
+      tarjeta.appendChild(grupo);
+      contenedor.appendChild(tarjeta);
+    });
+  });
+</script>
+
+  <!-- 🔗 Librería jsPDF (debe cargarse antes del script principal) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+  <!-- 🔗 Script principal con defer -->
+  <script src="scripts/main-v2.js" defer></script>
+
+  <!-- 🛡️ Registro del Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registrado:', reg))
+        .catch(err => console.error('Error al registrar el Service Worker:', err));
+    }
+  </script>
+<script>
+  document.getElementById("btn-fisica").addEventListener("click", () => {
+    document.getElementById("dashboard-fisica").style.display = "block";
+    document.getElementById("inicio-dashboard").style.display = "none";
+  });
+
+  document.getElementById("btn-logica").addEventListener("click", () => {
+    document.getElementById("dashboard-logica").style.display = "block";
+    document.getElementById("inicio-dashboard").style.display = "none";
+  });
+
+  document.getElementById("btn-volver-fisica").addEventListener("click", () => {
+    document.getElementById("dashboard-fisica").style.display = "none";
+    document.getElementById("inicio-dashboard").style.display = "block";
+  });
+
+  document.getElementById("btn-volver-logica").addEventListener("click", () => {
+    document.getElementById("dashboard-logica").style.display = "none";
+    document.getElementById("inicio-dashboard").style.display = "block";
+  });
+
+</script>
+<script>
+  document.getElementById("btn-inicio").addEventListener("click", () => {
+    window.location.href = "index.html"; // ← redirige al selector de proyectos
+  });
+</script>
+
+</body>
+</html>
