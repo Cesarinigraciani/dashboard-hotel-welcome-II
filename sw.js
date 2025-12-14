@@ -1,4 +1,4 @@
-const CACHE_NAME = "dashboard-cache-v4"; // cambia versión al actualizar
+const CACHE_NAME = "dashboard-cache-v5"; // cambia versión al actualizar
 const URLS_TO_CACHE = [
   "/",
   "/index.html",
@@ -10,11 +10,8 @@ const URLS_TO_CACHE = [
   "/styles/style-v2.css",
   "/styles/styles-residencias-misterios.css",
   "/assets/img/logo-empresa.png",
-  "/assets/img/icon-192.png",
-  "/assets/img/icon-512.png",
   "/assets/img/icono_dashboard.png"
 ];
-
 
 // 📥 Instalación: cachea archivos básicos
 self.addEventListener("install", event => {
