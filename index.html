@@ -544,7 +544,7 @@ if (localStorage.getItem("modoEdicion") === "true") {
 <!-- 🔧 Registro del Service Worker -->
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
+ navigator.serviceWorker.register('./sw.js')
     .then(reg => console.log('✅ Service Worker registrado:', reg))
     .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
 }
@@ -552,6 +552,7 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
 
 
