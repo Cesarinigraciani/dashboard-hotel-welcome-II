@@ -94,39 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 }); // cierre correcto
 
-// ✅ Detectar si la app ya está instalada
-if (window.matchMedia("(display-mode: standalone)").matches) {
-  const installBtn = document.getElementById("btn-instalar");
-  if (installBtn) {
-    installBtn.innerHTML = "✅ Ya instalada";
-    installBtn.disabled = true;
-    installBtn.style.backgroundColor = "#4CAF50";
-    installBtn.style.cursor = "default";
-    installBtn.classList.add("instalada");
-  }
-}
-
-// ✅ Instalación PWA
-let deferredPrompt;
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  const installBtn = document.getElementById("btn-instalar");
-  if (installBtn) {
-    installBtn.style.display = "inline-block";
-
-    installBtn.addEventListener("click", () => {
-      deferredPrompt.prompt();
-
-      deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
-      });
-    });
-  }
-});
-
 // ✅ Endpoints Misterios
 const urlResumen = "https://script.google.com/macros/s/AKfycbyJovic2_XrRXPFrW5I9lsmJKfxQUAybwN0EIjUELw5zetoJ_HpqEjMHfYP7xNb4k9r/exec";
 const urlLogico  = "https://script.google.com/macros/s/AKfycbyJovic2_XrRXPFrW5I9lsmJKfxQUAybwN0EIjUELw5zetoJ_HpqEjMHfYP7xNb4k9r/exec";
