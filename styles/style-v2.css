@@ -694,6 +694,67 @@ header h2 {
   color: #e0e0e0;
   margin-top: 4px;
 }
+.header-principal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  gap: 20px;
+}
+
+.header-principal img {
+  height: 60px;
+}
+
+.titulo-principal {
+  flex-grow: 1;
+}
+.boton-instalar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #007BFF; /* mismo azul que los demás */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  font-weight: bold;
+  font-size: 14px;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-instalar:hover {
+  background-color: #0056b3;
+}
+
+.icono-instalar {
+  width: 48px;
+  height: 48px;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center; /* o 'flex-start' si quieres alinearlos a la izquierda */
+  padding: 20px;
+}
+.boton-seccion {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 180px;
+  text-align: center;
+}
+
 
 
 
