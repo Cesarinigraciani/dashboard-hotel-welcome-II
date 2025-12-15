@@ -8,7 +8,7 @@
 
 <body>
 
- <!-- 🏢 Cabecera principal -->
+<!-- 🏢 Cabecera principal -->
 <header class="header-principal">
   <img src="assets/img/logo-empresa.png" alt="Logo Aguero Instalaciones">
 
@@ -29,91 +29,87 @@
   <button onclick="modificarPlantas()" class="boton-seccion">Modificar Plantas</button>
 </div>
 
-    <!-- 📝 Formulario nuevo proyecto -->
-    <form id="formProyecto" class="form-proyecto" style="display: none;">
-      <h3>Crear Nuevo Proyecto</h3>
+<!-- 📝 Formulario nuevo proyecto -->
+<form id="formProyecto" class="form-proyecto" style="display: none;">
+  <h3>Crear Nuevo Proyecto</h3>
 
-      <div class="form-group">
-        <label>Nombre del Proyecto</label>
-        <input type="text" name="nombre" placeholder="Ej. Residencias Misterios">
-      </div>
+  <div class="form-group">
+    <label>Nombre del Proyecto</label>
+    <input type="text" name="nombre" placeholder="Ej. Residencias Misterios">
+  </div>
 
-      <div class="form-group">
-        <label>Dirección</label>
-        <input type="text" name="direccion" placeholder="Ej. Calle Fuego 123">
-      </div>
+  <div class="form-group">
+    <label>Dirección</label>
+    <input type="text" name="direccion" placeholder="Ej. Calle Fuego 123">
+  </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Código Postal</label>
-          <input type="text" name="cp" placeholder="28053">
-        </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Código Postal</label>
+      <input type="text" name="cp" placeholder="28053">
+    </div>
 
-        <div class="form-group">
-          <label>Ciudad</label>
-          <input type="text" name="ciudad" placeholder="Madrid">
-        </div>
-      </div>
+    <div class="form-group">
+      <label>Ciudad</label>
+      <input type="text" name="ciudad" placeholder="Madrid">
+    </div>
+  </div>
 
-      <div class="form-group">
-        <label>Ingeniero Técnico Encargado</label>
-        <input type="text" name="ingeniero" placeholder="Ej. Juan Pérez">
-      </div>
+  <div class="form-group">
+    <label>Ingeniero Técnico Encargado</label>
+    <input type="text" name="ingeniero" placeholder="Ej. Juan Pérez">
+  </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Fecha Inicio de Obra</label>
-          <input type="date" name="fecha">
-        </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Fecha Inicio de Obra</label>
+      <input type="date" name="fecha">
+    </div>
 
-        <div class="form-group">
-          <label>Tiempo estimado (horas)</label>
-          <input type="number" name="tiempo" placeholder="120">
-        </div>
-      </div>
+    <div class="form-group">
+      <label>Tiempo estimado (horas)</label>
+      <input type="number" name="tiempo" placeholder="120">
+    </div>
+  </div>
 
-      <div class="form-group">
-        <label>Técnico Encargado PCI</label>
-        <input type="text" name="tecnico" placeholder="Ej. César Augusto">
-      </div>
+  <div class="form-group">
+    <label>Técnico Encargado PCI</label>
+    <input type="text" name="tecnico" placeholder="Ej. César Augusto">
+  </div>
 
-      <button type="button" class="btn-secundario" onclick="generarPlantas()"> Configurar Plantas</button>
+  <button type="button" class="btn-secundario" onclick="generarPlantas()"> Configurar Plantas</button>
 
-      <div id="panelPlantas" style="display:none; margin-top:20px;">
-        <label>Número de plantas:</label>
-        <input type="number" id="numPlantas" min="1" max="20" value="1">
+  <div id="panelPlantas" style="display:none; margin-top:20px;">
+    <label>Número de plantas:</label>
+    <input type="number" id="numPlantas" min="1" max="20" value="1">
 
-        <button type="button" class="btn-secundario" onclick="crearTarjetasPlantas()">Generar</button>
+    <button type="button" class="btn-secundario" onclick="crearTarjetasPlantas()">Generar</button>
 
-        <div id="contenedorPlantas" style="margin-top:20px;"></div>
-      </div>
+    <div id="contenedorPlantas" style="margin-top:20px;"></div>
+  </div>
 
-      <button type="button" class="btn-primario" onclick="guardarProyecto()">💾 Guardar Proyecto</button>
-    </form>
+  <button type="button" class="btn-primario" onclick="guardarProyecto()">💾 Guardar Proyecto</button>
+</form>
 
-   <!-- 📂 Lista de proyectos existentes -->
+<!-- 📂 Lista de proyectos existentes -->
 <div id="listaProyectos" style="display: none;">
   <h3>Proyectos Existentes</h3>
 
-  <!-- ✅ Selector de proyectos -->
   <select id="proyectosSelect" style="display: block; margin-bottom: 15px;">
     <option value="">Seleccione un proyecto...</option>
   </select>
 
-  <!-- ✅ Botones de acciones -->
   <div class="acciones-proyecto">
     <button onclick="modificarProyecto()"> Modificar Proyecto</button>
     <button onclick="borrarProyecto()"> Borrar Proyecto</button>
     <button onclick="modificarPlantas()"> Modificar Plantas</button>
     <button onclick="abrirProyectoSeleccionado()"> Abrir Proyecto</button>
-
   </div>
- </div>   
-</div>   
- <script>
+</div>
 
-  /* ✅ Detectar si venimos a editar un proyecto */
-  window.addEventListener("load", () => {
+<script>
+/* ✅ Detectar si venimos a editar un proyecto */
+window.addEventListener("load", () => {
   const modoEdicion = localStorage.getItem("modoEdicion");
   const proyecto = JSON.parse(localStorage.getItem("proyectoSeleccionado"));
 
@@ -124,81 +120,78 @@
   }
 });
 
+/* ✅ Mostrar formulario */
+function mostrarFormulario() {
+  document.getElementById('formProyecto').style.display = 'block';
+  document.getElementById('listaProyectos').style.display = 'none';
+  document.getElementById('proyectosSelect').style.display = 'none';
+}
 
-  /* ✅ Mostrar formulario */
-  function mostrarFormulario() {
-    document.getElementById('formProyecto').style.display = 'block';
-    document.getElementById('listaProyectos').style.display = 'none';
-    document.getElementById('proyectosSelect').style.display = 'none';
+/* ✅ Mostrar lista de proyectos */
+function mostrarLista() {
+  document.getElementById('formProyecto').style.display = 'none';
+  document.getElementById('listaProyectos').style.display = 'block';
+
+  const select = document.getElementById('proyectosSelect');
+  select.style.display = "block";
+  select.innerHTML = `<option value="">Seleccione un proyecto...</option>`;
+
+  const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+
+  lista.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p.id;
+    opt.textContent = p.nombre;
+    select.appendChild(opt);
+  });
+
+  select.appendChild(new Option("Hotel Welcome II", "welcomeII"));
+  select.appendChild(new Option("Residencias Misterios", "misterios"));
+}
+
+/* ✅ Abrir proyecto */
+function abrirProyecto(id) {
+  if (!id) return;
+
+  if (id === "welcomeII") {
+    window.location.href = "dashboard_welcome.html";
+    return;
   }
 
-  /* ✅ Mostrar lista de proyectos */
-  function mostrarLista() {
-    document.getElementById('formProyecto').style.display = 'none';
-    document.getElementById('listaProyectos').style.display = 'block';
-
-    const select = document.getElementById('proyectosSelect');
-    select.style.display = "block";
-    select.innerHTML = `<option value="">Seleccione un proyecto...</option>`;
-
-    const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
-
-    lista.forEach(p => {
-      const opt = document.createElement("option");
-      opt.value = p.id;
-      opt.textContent = p.nombre;
-      select.appendChild(opt);
-    });
-
-    // ✅ Proyectos fijos
-    select.appendChild(new Option("Hotel Welcome II", "welcomeII"));
-    select.appendChild(new Option("Residencias Misterios", "misterios"));
+  if (id === "misterios") {
+    window.location.href = "dashboard_misterios.html";
+    return;
   }
 
-  /* ✅ Abrir proyecto */
-  function abrirProyecto(id) {
-    if (!id) return;
+  const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
+  const proyecto = lista.find(p => p.id == id);
 
-    // ✅ Dashboards fijos
-    if (id === "welcomeII") {
-      window.location.href = "dashboard_welcome.html";
-      return;
-    }
-
-    if (id === "misterios") {
-      window.location.href = "dashboard_misterios.html";
-      return;
-    }
-
-    // ✅ Proyectos dinámicos
-    const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
-    const proyecto = lista.find(p => p.id == id);
-
-    if (!proyecto) {
-      alert("Proyecto no encontrado");
-      return;
-    }
-
-    localStorage.setItem("proyectoSeleccionado", JSON.stringify(proyecto));
-    window.location.href = "dashboard_dinamico.html";
+  if (!proyecto) {
+    alert("Proyecto no encontrado");
+    return;
   }
 
-  /* ✅ Botón: Abrir proyecto seleccionado */
-  function abrirProyectoSeleccionado() {
-    const id = document.getElementById("proyectosSelect").value;
+  localStorage.setItem("proyectoSeleccionado", JSON.stringify(proyecto));
+  window.location.href = "dashboard_dinamico.html";
+}
 
-    if (!id) {
-      alert("Seleccione un proyecto primero");
-      return;
-    }
+/* ✅ Botón: Abrir proyecto seleccionado */
+function abrirProyectoSeleccionado() {
+  const id = document.getElementById("proyectosSelect").value;
 
-    abrirProyecto(id);
+  if (!id) {
+    alert("Seleccione un proyecto primero");
+    return;
   }
 
-  /* ✅ Mostrar panel de plantas */
-  function generarPlantas() {
-    document.getElementById("panelPlantas").style.display = "block";
-  }
+  abrirProyecto(id);
+}
+
+/* ✅ Mostrar panel de plantas */
+function generarPlantas() {
+  document.getElementById("panelPlantas").style.display = "block";
+}
+
 /* ✅ Modificar proyecto */
 function modificarProyecto() {
   const id = document.getElementById("proyectosSelect").value;
@@ -208,7 +201,6 @@ function modificarProyecto() {
     return;
   }
 
-  // ❌ Proyectos fijos NO se modifican
   if (id === "welcomeII" || id === "misterios") {
     alert("Este proyecto no permite modificación de datos");
     return;
@@ -228,6 +220,7 @@ function modificarProyecto() {
   mostrarFormulario();
   cargarProyectoEnFormulario(proyecto);
 }
+
 /* ✅ Borrar proyecto */
 function borrarProyecto() {
   const id = document.getElementById("proyectosSelect").value;
@@ -237,7 +230,6 @@ function borrarProyecto() {
     return;
   }
 
-  // ❌ Proyectos fijos NO se borran
   if (id === "welcomeII" || id === "misterios") {
     alert("Este proyecto no se puede borrar");
     return;
@@ -252,98 +244,67 @@ function borrarProyecto() {
   window.location.reload();
 }
 
-  /* ✅ Crear tarjetas de plantas */
-  function crearTarjetasPlantas() {
-    const num = parseInt(document.getElementById("numPlantas").value);
-    const contenedor = document.getElementById("contenedorPlantas");
-    contenedor.innerHTML = "";
+/* ✅ Crear tarjetas de plantas */
+function crearTarjetasPlantas() {
+  const num = parseInt(document.getElementById("numPlantas").value);
+  const contenedor = document.getElementById("contenedorPlantas");
+  contenedor.innerHTML = "";
 
-    for (let i = 1; i <= num; i++) {
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "tarjeta-planta";
-     tarjeta.innerHTML = `
-  <h4>Planta ${i}</h4>
+  for (let i = 1; i <= num; i++) {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "tarjeta-planta";
+    tarjeta.innerHTML = `
+      <h4>Planta ${i}</h4>
 
-  <label>Nombre personalizado:
-    <input type="text" class="nombre-planta" placeholder="Ej: Planta ${i}">
-  </label>
+      <label>Nombre personalizado:
+        <input type="text" class="nombre-planta" placeholder="Ej: Planta ${i}">
+      </label>
 
-  <label>Equipos a instalar:</label>
-  <select class="select-equipos">
-    <option value="Detectores">Detectores</option>
-    <option value="Siray+Bscl">Siray+Bscl</option>
-    <option value="Zocalos">Zócalos</option>
-    <option value="Central">Central Cofem</option>
-    <option value="Baterias">Baterías</option>
-    <option value="Pukay">Pukay</option>
-    <option value="Mstay 8">Mstay 8</option>
-    <option value="Mda2 Ylt">Mdy2 Ylt</option>
-    <option value="Kamay">Kamay</option>
-    <option value="Kit-Pmr">Kit-Pmr</option>
-    <option value="Mda1y">Mda1y</option>
-    <option value="Fuente Auxiliar">Fuente Auxiliar</option>
-    <option value="Extintores">Extintores</option>
-    <option value="Soportes">Soportes</option>
-  </select>
+      <label>Equipos a instalar:</label>
+      <select class="select-equipos">
+        <option value="Detectores">Detectores</option>
+        <option value="Siray+Bscl">Siray+Bscl</option>
+        <option value="Zocalos">Zócalos</option>
+        <option value="Central">Central Cofem</option>
+        <option value="Baterias">Baterías</option>
+        <option value="Pukay">Pukay</option>
+        <option value="Mstay 8">Mstay 8</option>
+        <option value="Mda2 Ylt">Mdy2 Ylt</option>
+        <option value="Kamay">Kamay</option>
+        <option value="Kit-Pmr">Kit-Pmr</option>
+        <option value="Mda1y">Mda1y</option>
+        <option value="Fuente Auxiliar">Fuente Auxiliar</option>
+        <option value="Extintores">Extintores</option>
+        <option value="Soportes">Soportes</option>
+      </select>
 
-  <button type="button" onclick="agregarEquipo(this)">Añadir equipo</button>
+      <button type="button" onclick="agregarEquipo(this)">Añadir equipo</button>
 
-  <ul class="lista-equipos"></ul>
+      <ul class="lista-equipos"></ul>
 
-  <!-- ✅ ESTE ES EL BOTÓN QUE FALTABA -->
-  <button type="button" class="btn-eliminar-planta" style="
-    margin-top:10px;
-    background:#c0392b;
-    color:white;
-    border:none;
-    padding:6px 10px;
-    border-radius:4px;
-  ">Eliminar planta</button>
-`;
- 
-      contenedor.appendChild(tarjeta);
-    // ✅ Sincronizar nombre personalizado con el título
-const inputNombre = tarjeta.querySelector(".nombre-planta");
-const titulo = tarjeta.querySelector("h4");
+      <button type="button" class="btn-eliminar-planta" style="
+        margin-top:10px;
+        background:#c0392b;
+        color:white;
+        border:none;
+        padding:6px 10px;
+        border-radius:4px;
+      ">Eliminar planta</button>
+    `;
 
-inputNombre.addEventListener("input", () => {
-  const nuevoNombre = inputNombre.value.trim();
-  titulo.textContent = nuevoNombre || `Planta ${i}`;
-});
+    contenedor.appendChild(tarjeta);
 
-    }
+    const inputNombre = tarjeta.querySelector(".nombre-planta");
+    const titulo = tarjeta.querySelector("h4");
+
+    inputNombre.addEventListener("input", () => {
+      const nuevoNombre = inputNombre.value.trim();
+      titulo.textContent = nuevoNombre || `Planta ${i}`;
+    });
   }
+}
 
-  /* ✅ Modificar plantas */
-  function modificarPlantas() {
-    const id = document.getElementById("proyectosSelect").value;
-
-    if (!id) {
-      alert("Seleccione un proyecto primero");
-      return;
-    }
-
-    // ❌ Proyectos fijos NO se modifican
-    if (id === "welcomeII" || id === "misterios") {
-      alert("Este proyecto no permite modificar plantas");
-      return;
-    }
-
-    const lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
-    const proyecto = lista.find(p => p.id == id);
-
-    if (!proyecto) {
-      alert("Proyecto no encontrado");
-      return;
-    }
-
-    localStorage.setItem("proyectoSeleccionado", JSON.stringify(proyecto));
-    localStorage.setItem("modoEdicion", "true");
-
-    window.location.href = "index.html#panelPlantas";
-  }
-
- /* ✅ Añadir equipo editable y con botón de borrado funcional */
+/* ✅ Añadir equipo editable */
 function agregarEquipo(btn) {
   const tarjeta = btn.closest(".tarjeta-planta");
   const select = tarjeta.querySelector(".select-equipos");
@@ -351,43 +312,35 @@ function agregarEquipo(btn) {
 
   const equipoSeleccionado = select.value;
 
-  // Crear <li>
   const nuevoItem = document.createElement("li");
 
-  // Crear input editable
   const input = document.createElement("input");
   input.type = "text";
   input.className = "equipo-editable";
   input.value = equipoSeleccionado;
   input.style.marginRight = "10px";
 
-  // Crear botón eliminar
   const botonEliminar = document.createElement("button");
   botonEliminar.type = "button";
   botonEliminar.className = "btn-eliminar-equipo";
   botonEliminar.textContent = "🗑️";
 
-  // Asignar evento de borrado
   botonEliminar.addEventListener("click", () => {
     nuevoItem.remove();
   });
 
-  // Añadir elementos al <li>
   nuevoItem.appendChild(input);
   nuevoItem.appendChild(botonEliminar);
-
-  // Añadir <li> a la lista
   lista.appendChild(nuevoItem);
 }
 
-  /* ✅ Guardar proyecto nuevo (compatible con equipos editables y borrables) */
+/* ✅ Guardar proyecto nuevo */
 function guardarProyecto() {
   const plantas = [];
 
   document.querySelectorAll(".tarjeta-planta").forEach(t => {
     const nombre = t.querySelector(".nombre-planta").value || "Sin nombre";
 
-    // ✅ Leer solo los equipos que realmente existen y están en inputs
     const equipos = [];
     t.querySelectorAll(".lista-equipos li").forEach(li => {
       const input = li.querySelector(".equipo-editable");
@@ -420,7 +373,7 @@ function guardarProyecto() {
   window.location.reload();
 }
 
-/* ✅ Guardar cambios en un proyecto existente (compatible con equipos editables y borrables) */
+/* ✅ Guardar cambios */
 function guardarCambios() {
   const proyecto = JSON.parse(localStorage.getItem("proyectoSeleccionado"));
   if (!proyecto) {
@@ -428,7 +381,6 @@ function guardarCambios() {
     return;
   }
 
-  // ✅ Actualizar datos del formulario
   proyecto.nombre = document.querySelector("input[name='nombre']").value;
   proyecto.direccion = document.querySelector("input[name='direccion']").value;
   proyecto.cp = document.querySelector("input[name='cp']").value;
@@ -438,12 +390,10 @@ function guardarCambios() {
   proyecto.tiempo = document.querySelector("input[name='tiempo']").value;
   proyecto.tecnico = document.querySelector("input[name='tecnico']").value;
 
-  // ✅ Actualizar plantas
   proyecto.plantas = [];
   document.querySelectorAll(".tarjeta-planta").forEach(t => {
     const nombre = t.querySelector(".nombre-planta").value || "Sin nombre";
 
-    // ✅ Leer equipos desde inputs editables
     const equipos = [];
     t.querySelectorAll(".lista-equipos li").forEach(li => {
       const input = li.querySelector(".equipo-editable");
@@ -455,7 +405,6 @@ function guardarCambios() {
     proyecto.plantas.push({ nombre, equipos });
   });
 
-  // ✅ Guardar cambios en localStorage
   let lista = JSON.parse(localStorage.getItem("proyectosPCI")) || [];
   const index = lista.findIndex(p => p.id === proyecto.id);
   if (index !== -1) {
@@ -467,14 +416,12 @@ function guardarCambios() {
   alert("✅ Cambios guardados correctamente");
   window.location.reload();
 
-
-  // ✅ Limpiar estado y volver al index
   localStorage.removeItem("modoEdicion");
   localStorage.removeItem("proyectoSeleccionado");
   window.location.href = "index.html";
 }
 
- /* ✅ Cargar proyecto en modo edición (compatible con equipos editables y borrables) */
+/* ✅ Cargar proyecto en modo edición */
 function cargarProyectoEnFormulario(proyecto) {
   document.querySelector("input[name='nombre']").value = proyecto.nombre || "";
   document.querySelector("input[name='direccion']").value = proyecto.direccion || "";
@@ -518,11 +465,11 @@ function cargarProyectoEnFormulario(proyecto) {
         <option value="Soportes">Soportes</option>
       </select>
 
-      <button type="button" onclick="agregarEquipo(this)">Añadir equipo</button>
-      <button type="button" class="btn-eliminar-planta">Eliminar planta</button>
+      <button type="button" onclick="agregarEquipo(this
+ <button type="button" class="btn-eliminar-planta">Eliminar planta</button>
 
-      <ul class="lista-equipos"></ul>
-    `;
+<ul class="lista-equipos"></ul>
+`;
 
     // ✅ Insertar equipos editables con botón eliminar
     const lista = tarjeta.querySelector(".lista-equipos");
@@ -556,11 +503,13 @@ function cargarProyectoEnFormulario(proyecto) {
     contenedor.appendChild(tarjeta);
   });
 }
+</script> <!-- ✅ ESTE CIERRE ES OBLIGATORIO -->
 
-   // ✅ Delegación global para eliminar plantas (funciona siempre)
+<script>
+// ✅ Delegación global para eliminar plantas (funciona siempre)
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("btn-eliminar-planta")) {
-    const tarjeta = e.target.closest(".tarjeta-planta"); // ✅ tu clase real
+    const tarjeta = e.target.closest(".tarjeta-planta");
     if (tarjeta) tarjeta.remove();
   }
 });
@@ -571,25 +520,68 @@ document.addEventListener("input", (e) => {
     const tarjeta = e.target.closest(".tarjeta-planta");
     const titulo = tarjeta.querySelector("h4");
     const valor = e.target.value.trim();
-
-    // Extraer número de planta del título original
     const numero = titulo.textContent.match(/\d+/)?.[0] || "";
-
     titulo.textContent = valor || `Planta ${numero}`;
   }
 });
+</script>
 
-// ✅ Solo activar "Guardar Cambios" si estamos en modo edición
+<!-- ✅ Solo activar "Guardar Cambios" si estamos en modo edición -->
+<script>
 if (localStorage.getItem("modoEdicion") === "true") {
   const btnGuardar = document.querySelector(".btn-primario");
-  btnGuardar.textContent = " Guardar Cambios";
+  btnGuardar.textContent = "Guardar Cambios";
   btnGuardar.onclick = guardarCambios;
 }
-  
+</script>
+
+<!-- 📁 Librería jsPDF -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<!-- 📄 Script principal -->
+<script src="scripts/main-v2.js" defer></script>
+
+<!-- 🔧 Registro del Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(reg => console.log('✅ Service Worker registrado:', reg))
+    .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
+}
+</script>
+
+<!-- ✅ Instalación de la PWA -->
+<script>
+let deferredPrompt;
+const btnInstalar = document.getElementById("btn-instalar");
+
+// Esperar a que Chrome dispare el evento de instalación
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  btnInstalar.style.display = "inline-block"; // Mostrar botón cuando sea instalable
+});
+
+// Acción del botón de instalación
+btnInstalar.addEventListener("click", async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const resultado = await deferredPrompt.userChoice;
+
+    if (resultado.outcome === "accepted") {
+      console.log("✅ Usuario aceptó la instalación");
+    } else {
+      console.log("❌ Usuario rechazó la instalación");
+    }
+
+    deferredPrompt = null;
+  }
+});
 </script>
 
 </body>
 </html>
+
 
 
 
