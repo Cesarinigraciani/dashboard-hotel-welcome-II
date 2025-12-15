@@ -1,17 +1,18 @@
-const CACHE_NAME = "dashboard-cache-v6"; // cambia versión al actualizar
+const CACHE_NAME = "dashboard-cache-v7"; // sube versión
 const URLS_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/dashboard_misterios.html",
-  "/dashboard_welcome.html",
-  "/dashboard_dinamico.html",
-  "/scripts/main_misterios.js",
-  "/scripts/main-v2.js",
-  "/styles/style-v2.css",
-  "/styles/styles-residencias-misterios.css",
-  "/assets/img/logo-empresa.png",
-  "/assets/img/icono_dashboard.png"
+  "./",
+  "./index.html",
+  "./dashboard_misterios.html",
+  "./dashboard_welcome.html",
+  "./dashboard_dinamico.html",
+  "./scripts/main_misterios.js",
+  "./scripts/main-v2.js",
+  "./styles/style-v2.css",
+  "./styles/styles-residencias-misterios.css",
+  "./assets/img/logo-empresa.png",
+  "./assets/img/icono_dashboard.png"
 ];
+
 
 // 📥 Instalación: cachea archivos básicos
 self.addEventListener("install", event => {
@@ -54,5 +55,6 @@ self.addEventListener("fetch", event => {
       .catch(() => caches.match(event.request))
   );
 });
+
 
 
