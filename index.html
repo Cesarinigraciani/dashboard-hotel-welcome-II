@@ -8,24 +8,26 @@
 
 <body>
 
-  <!-- 🏢 Cabecera principal -->
+ <!-- 🏢 Cabecera principal -->
 <header class="header-principal">
   <img src="assets/img/logo-empresa.png" alt="Logo Aguero Instalaciones">
 
   <div class="titulo-principal">
     <h1>AVANCES PROYECTOS PCI</h1>
     <h2>Aguero Instalaciones</h2>
-  <h3 class="subfirma">v3.0.0 — By: César Augusto</h3>
+    <h3 class="subfirma">v3.0.0 — By: César Augusto</h3>
   </div>
 </header>
 
-  <!-- 🔘 Botones principales -->
-  <div class="container">
-    <button onclick="mostrarFormulario()"> Generar Proyecto Nuevo</button>
-    <button onclick="mostrarLista()"> Abrir Proyecto Existente</button>
-    <button onclick="modificarProyecto()"> Modificar Proyecto</button>
-    <button onclick="borrarProyecto()"> Borrar Proyecto</button>
-    <button onclick="modificarPlantas()"> Modificar Plantas</button>
+<!-- 🔘 Botones principales -->
+<div class="container">
+  <button onclick="mostrarFormulario()" class="boton-seccion">Generar Proyecto Nuevo</button>
+  <button onclick="mostrarLista()" class="boton-seccion">Abrir Proyecto Existente</button>
+  <button onclick="modificarProyecto()" class="boton-seccion">Modificar Proyecto</button>
+  <button id="btn-instalar" class="boton-seccion" title="Instalar Dashboard Aguero-PCI">Instalar App</button>
+  <button onclick="borrarProyecto()" class="boton-seccion">Borrar Proyecto</button>
+  <button onclick="modificarPlantas()" class="boton-seccion">Modificar Plantas</button>
+</div>
 
     <!-- 📝 Formulario nuevo proyecto -->
     <form id="formProyecto" class="form-proyecto" style="display: none;">
@@ -259,36 +261,46 @@ function borrarProyecto() {
     for (let i = 1; i <= num; i++) {
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-planta";
-      tarjeta.innerHTML = `
-        <h4>Planta ${i}</h4>
+     tarjeta.innerHTML = `
+  <h4>Planta ${i}</h4>
 
-        <label>Nombre personalizado:
-          <input type="text" class="nombre-planta" placeholder="Ej: Planta ${i}"
->
-        </label>
+  <label>Nombre personalizado:
+    <input type="text" class="nombre-planta" placeholder="Ej: Planta ${i}">
+  </label>
 
-        <label>Equipos a instalar:</label>
-        <select class="select-equipos">
-          <option value="Detectores">Detectores</option>
-          <option value="Siray+Bscl">Siray+Bscl</option>
-          <option value="Zocalos">Zócalos</option>
-          <option value="Central">Central Cofem</option>
-          <option value="Baterias">Baterías</option>
-          <option value="Pukay">Pukay</option>
-          <option value="Mstay 8">Mstay 8</option>
-          <option value="Mda2 Ylt">Mdy2 Ylt</option>
-          <option value="Kamay">Kamay</option>
-          <option value="Kit-Pmr">Kit-Pmr</option>
-          <option value="Mda1y">Mda1y</option>
-          <option value="Fuente Auxiliar">Fuente Auxiliar</option>
-          <option value="Extintores">Extintores</option>
-          <option value="Soportes">Soportes</option>
-        </select>
+  <label>Equipos a instalar:</label>
+  <select class="select-equipos">
+    <option value="Detectores">Detectores</option>
+    <option value="Siray+Bscl">Siray+Bscl</option>
+    <option value="Zocalos">Zócalos</option>
+    <option value="Central">Central Cofem</option>
+    <option value="Baterias">Baterías</option>
+    <option value="Pukay">Pukay</option>
+    <option value="Mstay 8">Mstay 8</option>
+    <option value="Mda2 Ylt">Mdy2 Ylt</option>
+    <option value="Kamay">Kamay</option>
+    <option value="Kit-Pmr">Kit-Pmr</option>
+    <option value="Mda1y">Mda1y</option>
+    <option value="Fuente Auxiliar">Fuente Auxiliar</option>
+    <option value="Extintores">Extintores</option>
+    <option value="Soportes">Soportes</option>
+  </select>
 
-        <button type="button" onclick="agregarEquipo(this)">Añadir equipo</button>
+  <button type="button" onclick="agregarEquipo(this)">Añadir equipo</button>
 
-        <ul class="lista-equipos"></ul>
-      `;
+  <ul class="lista-equipos"></ul>
+
+  <!-- ✅ ESTE ES EL BOTÓN QUE FALTABA -->
+  <button type="button" class="btn-eliminar-planta" style="
+    margin-top:10px;
+    background:#c0392b;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:4px;
+  ">Eliminar planta</button>
+`;
+ 
       contenedor.appendChild(tarjeta);
     // ✅ Sincronizar nombre personalizado con el título
 const inputNombre = tarjeta.querySelector(".nombre-planta");
@@ -545,30 +557,40 @@ function cargarProyectoEnFormulario(proyecto) {
   });
 }
 
-   // ✅ Sincronizar nombre personalizado con el título
-const inputNombre = tarjeta.querySelector(".nombre-planta");
-const titulo = tarjeta.querySelector("h4");
-
-inputNombre.addEventListener("input", () => {
-  const nuevoNombre = inputNombre.value.trim();
-  titulo.textContent = nuevoNombre || `Planta ${i}`;
+   // ✅ Delegación global para eliminar plantas (funciona siempre)
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn-eliminar-planta")) {
+    const tarjeta = e.target.closest(".tarjeta-planta"); // ✅ tu clase real
+    if (tarjeta) tarjeta.remove();
+  }
 });
 
-// ✅ Eliminar tarjeta de planta
-const btnEliminar = tarjeta.querySelector(".btn-eliminar-planta");
-btnEliminar.addEventListener("click", () => {
-  tarjeta.remove();
-    });
- 
+// ✅ Delegación para sincronizar nombre con el título
+document.addEventListener("input", (e) => {
+  if (e.target.classList.contains("nombre-planta")) {
+    const tarjeta = e.target.closest(".tarjeta-planta");
+    const titulo = tarjeta.querySelector("h4");
+    const valor = e.target.value.trim();
 
-    const btnGuardar = document.querySelector(".btn-primario");
-    btnGuardar.textContent = "💾 Guardar Cambios";
-    btnGuardar.onclick = guardarCambios;
+    // Extraer número de planta del título original
+    const numero = titulo.textContent.match(/\d+/)?.[0] || "";
+
+    titulo.textContent = valor || `Planta ${numero}`;
+  }
+});
+
+// ✅ Solo activar "Guardar Cambios" si estamos en modo edición
+if (localStorage.getItem("modoEdicion") === "true") {
+  const btnGuardar = document.querySelector(".btn-primario");
+  btnGuardar.textContent = " Guardar Cambios";
+  btnGuardar.onclick = guardarCambios;
+}
   
 </script>
 
 </body>
 </html>
+
 
 
 
