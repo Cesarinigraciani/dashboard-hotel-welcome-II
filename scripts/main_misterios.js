@@ -108,14 +108,18 @@ if (window.matchMedia("(display-mode: standalone)").matches) {
 
 // ✅ Instalación PWA
 let deferredPrompt;
+
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
+
   const installBtn = document.getElementById("btn-instalar");
   if (installBtn) {
     installBtn.style.display = "inline-block";
+
     installBtn.addEventListener("click", () => {
       deferredPrompt.prompt();
+
       deferredPrompt.userChoice.then(() => {
         deferredPrompt = null;
       });
