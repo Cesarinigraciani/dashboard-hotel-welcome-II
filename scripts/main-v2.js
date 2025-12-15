@@ -96,37 +96,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // ✅ Detectar si la app ya está instalada
-  if (window.matchMedia("(display-mode: standalone)").matches) {
-    const installBtn = document.getElementById("btn-instalar");
-    if (installBtn) {
-      installBtn.innerHTML = "✅ Ya instalada";
-      installBtn.disabled = true;
-      installBtn.style.backgroundColor = "#4CAF50";
-      installBtn.style.cursor = "default";
-      installBtn.classList.add("instalada");
-    }
+if (window.matchMedia("(display-mode: standalone)").matches) {
+  const installBtn = document.getElementById("btn-instalar");
+  if (installBtn) {
+    installBtn.innerHTML = "✅ Ya instalada";
+    installBtn.disabled = true;
+    installBtn.style.backgroundColor = "#4CAF50";
+    installBtn.style.cursor = "default";
+    installBtn.classList.add("instalada");
   }
-
+}
 
 // ✅ Instalación de la PWA
 let deferredPrompt;
+
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
+
   const installBtn = document.getElementById("btn-instalar");
   if (installBtn) {
     installBtn.style.display = "inline-block";
+
     installBtn.addEventListener("click", () => {
       deferredPrompt.prompt();
+
       deferredPrompt.userChoice.then(choice => {
         if (choice.outcome === "accepted") {
-          console.log("✅ Dashboard Vallecas instalado");
+          console.log("✅ Dashboard Aguero-PCI instalado");
+          installBtn.innerHTML = "✅ Ya instalada";
+          installBtn.disabled = true;
+          installBtn.style.backgroundColor = "#4CAF50";
+          installBtn.style.cursor = "default";
         }
         deferredPrompt = null;
       });
     });
   }
 });
+
+// ✅ Ocultar el botón si la app se instala desde otro método
+window.addEventListener("appinstalled", () => {
+  const installBtn = document.getElementById("btn-instalar");
+  if (installBtn) {
+    installBtn.innerHTML = "✅ Ya instalada";
+    installBtn.disabled = true;
+    installBtn.style.backgroundColor = "#4CAF50";
+    installBtn.style.cursor = "default";
+  }
+  console.log("✅ Dashboard Aguero-PCI ya estaba instalado");
+});
+
 
 // 🔗 Endpoints
 const urlResumen = "https://script.google.com/macros/s/AKfycbwfgMEz_12nEmQoTvrM43p7rEjGuMT1ZCKBVwZ9aBROWpelSoItPKhyF7NGhICnlwGm/exec";
@@ -577,6 +597,7 @@ fetch(urlLogico)
   .catch(err => {
     console.error("❌ Error al cargar avance lógico por planta:", err);
   });
+
 
 
 
