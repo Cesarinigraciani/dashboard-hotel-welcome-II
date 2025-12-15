@@ -550,37 +550,9 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<!-- ✅ Instalación de la PWA -->
-<script>
-let deferredPrompt;
-const btnInstalar = document.getElementById("btn-instalar");
-
-// Esperar a que Chrome dispare el evento de instalación
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  btnInstalar.style.display = "inline-block"; // Mostrar botón cuando sea instalable
-});
-
-// Acción del botón de instalación
-btnInstalar.addEventListener("click", async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const resultado = await deferredPrompt.userChoice;
-
-    if (resultado.outcome === "accepted") {
-      console.log("✅ Usuario aceptó la instalación");
-    } else {
-      console.log("❌ Usuario rechazó la instalación");
-    }
-
-    deferredPrompt = null;
-  }
-});
-</script>
-
 </body>
 </html>
+
 
 
 
