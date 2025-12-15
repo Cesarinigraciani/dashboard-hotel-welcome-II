@@ -1,4 +1,4 @@
-const CACHE_NAME = "dashboard-cache-v5"; // cambia versión al actualizar
+const CACHE_NAME = "dashboard-cache-v6"; // cambia versión al actualizar
 const URLS_TO_CACHE = [
   "/",
   "/index.html",
@@ -54,4 +54,5 @@ self.addEventListener("fetch", event => {
       .catch(() => caches.match(event.request))
   );
 });
+
 
